@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'c0nygre',
-  database: 'pubs'
+  database: 'portfolio'
 });
 
 const server = http.createServer((req, res) => {
@@ -34,7 +34,7 @@ server.listen(port, () => {
 });
 
 function handleGetRequest(res) {
-  connection.query('SELECT * FROM authors', (error, results, fields) => {
+  connection.query('SELECT * FROM user', (error, results, fields) => {
     if (error) throw error;
 
     const html = `
@@ -51,7 +51,7 @@ function handleGetRequest(res) {
             </tr>
             ${results.map(user => `
               <tr>
-                <td>${user.au_lname}</td>
+                <td>${user.fname}</td>
               </tr>
             `).join('')}
           </table>
