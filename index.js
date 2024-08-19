@@ -7,11 +7,11 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'c0nygre',
-  database: 'pubs'
+  database: 'portfolio'
 });
 
 app.get('/', (req, res) => {
-  connection.query('SELECT * FROM authors', (error, results, fields) => {
+  connection.query('SELECT * FROM user', (error, results, fields) => {
     if (error) throw error;
 
     const html = `
@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
             </tr>
             ${results.map(user => `
               <tr>
-                <td>${user.au_lname}</td>
+                <td>${user.fname}</td>
               </tr>
             `).join('')}
           </table>
