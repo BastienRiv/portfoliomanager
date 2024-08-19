@@ -1,40 +1,17 @@
-
-
-
-const http = require('http');
-const url = require('url');
+const express = require('express');
 const mysql = require('mysql');
+
+const app = express();
 
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'c0nygre',
-  database: 'portfolio'
+  database: 'pubs'
 });
 
-const server = http.createServer((req, res) => {
-  const parsedUrl = url.parse(req.url, true);
-
-  switch (req.method) {
-    case 'GET':
-      if (parsedUrl.pathname === '/') {
-        handleGetRequest(res);
-      } else {
-        sendResponse(res, 404, 'Not Found');
-      }
-      break;
-    default:
-      sendResponse(res, 404, 'Not Found');
-  }
-});
-
-const port = 4000;
-server.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}/`);
-});
-
-function handleGetRequest(res) {
-  connection.query('SELECT * FROM user', (error, results, fields) => {
+app.get('/', (req, res) => {
+  connection.query('SELECT * FROM authors', (error, results, fields) => {
     if (error) throw error;
 
     const html = `
@@ -51,7 +28,7 @@ function handleGetRequest(res) {
             </tr>
             ${results.map(user => `
               <tr>
-                <td>${user.fname}</td>
+                <td>${user.au_lname}</td>
               </tr>
             `).join('')}
           </table>
@@ -59,13 +36,11 @@ function handleGetRequest(res) {
       </html>
     `;
 
-    sendResponse(res, 200, html);
+    res.send(html);
   });
-}
+});
 
-function sendResponse(res, statusCode, content) {
-  res.statusCode = statusCode;
-  res.setHeader('Content-Type', 'text/html');
-  res.end(content);
-}
-
+const port = 4000;
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}/`);
+});
