@@ -1,44 +1,52 @@
+"use strcit"
+
 const express = require('express');
-const mysql = require('mysql');
+const {executeQuery} = require('./database-setup.js')
 
+// import express from 'express'
+// import { executeQuery } from './database-setup.js'
+
+// Express App
 const app = express();
+app.use(express.json());
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'c0nygre',
-  database: 'portfolio'
+// --- Middleware
+
+app.use((req, res, next) => {
+  console.log('--- Incoming Request --- ' + "Time: " + Date.now());
+  console.log('Method: ' + req.method + ' | URL: ' + req.originalUrl);
+  console.log('Headers:', JSON.stringify(req.headers, null, 2));
+  console.log('Body:', JSON.stringify(req.body, null, 2));
+  console.log('Query Params:', JSON.stringify(req.query, null, 2));
+  console.log('------------------------');
+  next();
 });
 
 app.get('/', (req, res) => {
-  connection.query('SELECT * FROM user', (error, results, fields) => {
-    if (error) throw error;
+  res.send('This API is live!')
+})
 
-    const html = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>User Data</title>
-        </head>
-        <body>
-          <h1>User Data</h1>
-          <table>
-            <tr>
-              <th>Name</th>
-            </tr>
-            ${results.map(user => `
-              <tr>
-                <td>${user.fname}</td>
-              </tr>
-            `).join('')}
-          </table>
-        </body>
-      </html>
-    `;
+app.get('/user', (req, res) => {
+  const query = `SELECT * from user;`;
 
-    res.send(html);
-  });
+  executeQuery(query,[],res);
+  
 });
+
+app.get('/companies', (req, res) => {
+  const query = `SELECT * from companies;`
+
+  connection.query(query, (error, results, fields) => {
+    if (error) {
+        console.error('Database query error:', error);
+        res.status(500).send('Database query error\n');
+        return;
+    }
+
+    res.status(200).json(results);
+  });
+})
+
 
 const port = 4000;
 app.listen(port, () => {
