@@ -1,14 +1,19 @@
 "use strcit"
 
-const express = require('express');
-const {executeQuery} = require('./database-setup.js')
+//const express = require('express');
+//const {executeQuery} = require('./database-setup.js')
+// const swaggerUi = require('swagger-ui-express');
+// const swaggerDocument = require('./swagger.json');
 
-// import express from 'express'
-// import { executeQuery } from './database-setup.js'
+import express from 'express'
+import { executeQuery } from './database-setup.js'
 
 // Express App
 const app = express();
 app.use(express.json());
+
+
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // --- Middleware
 
@@ -30,21 +35,30 @@ app.get('/user', (req, res) => {
   const query = `SELECT * from user;`;
 
   executeQuery(query,[],res);
-  
 });
 
-app.get('/companies', (req, res) => {
-  const query = `SELECT * from companies;`
+app.get('/company', (req, res) => {
+  const query = `SELECT * from company;`;
 
-  connection.query(query, (error, results, fields) => {
-    if (error) {
-        console.error('Database query error:', error);
-        res.status(500).send('Database query error\n');
-        return;
-    }
+  executeQuery(query, [] , res);
+})
 
-    res.status(200).json(results);
-  });
+app.get('/stocks', (req, res) => {
+  const query = `SELECT * from stocks;`;
+
+  executeQuery(query, [] , res);
+})
+
+app.get('/buy', (req, res) => {
+  const query = `SELECT * from buy;`;
+
+  executeQuery(query, [] , res);
+})
+
+app.get('/sell', (req, res) => {
+  const query = `SELECT * from sell;`;
+
+  executeQuery(query, [] , res);
 })
 
 
