@@ -1,4 +1,4 @@
-"use strcit"
+"use strict"
 
 //const express = require('express');
 //const {executeQuery} = require('./database-setup.js')
@@ -7,11 +7,14 @@
 
 import express from 'express'
 import { executeQuery } from './database-setup.js'
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Express App
 const app = express();
 app.use(express.json());
 
+const __filename = fileURLToPath(import.meta.url);
 
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
@@ -65,4 +68,17 @@ app.get('/sell', (req, res) => {
 const port = 4000;
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
+});
+
+
+const app1 = express();
+
+app1.use(express.static(path.join(__filename, 'public')));
+
+app1.get('/', (req, res) => {
+  res.sendFile(path.join(__filename, '../public/index.html'))
+} )
+
+app1.listen(3007, () => {
+    console.log(`Server is running on http://localhost:${3007}`);
 });
