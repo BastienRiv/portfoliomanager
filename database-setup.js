@@ -1,9 +1,9 @@
-// import mysql from 'mysql2';
-// import dotenv from 'dotenv'
-// dotenv.config();
+import mysql from 'mysql2';
+import dotenv from 'dotenv'
+dotenv.config();
 
-const mysql = require('mysql');
-require('dotenv').config()
+//const mysql = require('mysql2');
+//require('dotenv').config()
 //console.log(process.env) // remove this after you've confirmed it is working
 
 // Database Connection
@@ -24,23 +24,7 @@ connection.connect((err) => {
     console.log('Connected to the database');
 });
 
-function executeQuery(query, params, res) {
-    connection.query(query, params, (error, results, fields) => {
-        if (error) {
-            console.error('Database query error:', error);
-            res.status(500).send('Database query error\n');
-            return;
-        }
-
-        res.status(200).json(results);
-    });
-}
-
-module.exports={
-    executeQuery
-}
-  
-// export function executeQuery(query, params, res) {
+// function executeQuery(query, params, res) {
 //     connection.query(query, params, (error, results, fields) => {
 //         if (error) {
 //             console.error('Database query error:', error);
@@ -51,3 +35,19 @@ module.exports={
 //         res.status(200).json(results);
 //     });
 // }
+
+// module.exports={
+//     executeQuery
+// }
+  
+export function executeQuery(query, params, res) {
+    connection.query(query, params, (error, results, fields) => {
+        if (error) {
+            console.error('Database query error:', error);
+            res.status(500).send('Database query error\n');
+            return;
+        }
+
+        res.status(200).json(results);
+    });
+}
