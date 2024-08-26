@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    const response = await fetch('http://localhost:4000/dashboard');
+    const response = await fetch('http://localhost:4001/dashboard');
     const data = await response.json();
 
     const jobCounts = data.jobCounts;
