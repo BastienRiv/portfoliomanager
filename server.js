@@ -1,7 +1,7 @@
 "use strict"
 
 import express from 'express'
-import { executeQuery } from './database-setup.js'
+import { executeQuery, executeQueryDashboard } from './database-setup.js'
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
@@ -58,7 +58,7 @@ app.get('/dashboard', async (req,res) => {
       params.push(city, state);
     }
 
-    const results = await executeQuery(query, params, res);
+    const results = await executeQueryDashboard(query, params, res);
 
     const jobCounts = {};
     results.forEach((employee) => {
@@ -113,7 +113,7 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
 
-const port = 4000;
+const port = 4001;
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
