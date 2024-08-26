@@ -108,3 +108,14 @@ CREATE TABLE sell (
 
 INSERT INTO sell (id_transactions, sdate, stocks_sold, adj_cost, tot_sold, id, id_company, id_stock) 
 VALUES ('1-1-1-1-1-S', '2024-08-22',1,76,85,2,'NFLX','2023-08-21NFLX1013');
+
+
+-----------
+-- PREDICTION
+------------
+
+CREATE TABLE prediction (
+    id_company varchar(20) PRIMARY KEY,
+    pdate DATE,
+    pcost float
+);
