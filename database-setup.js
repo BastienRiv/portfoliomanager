@@ -1,53 +1,39 @@
-import mysql from 'mysql2';
+import mysql from 'mysql2/promise';
 import dotenv from 'dotenv'
+
 dotenv.config();
 
-//const mysql = require('mysql2');
-//require('dotenv').config()
-//console.log(process.env) // remove this after you've confirmed it is working
-
 // Database Connection
+let connection;
 
-const connection = mysql.createConnection({
-    host: process.env.host,
-    user: process.env.user,
-    password: process.env.password,
-    database: process.env.database,
-    port: process.env.port
-});
-  
-connection.connect((err) => {
-    if (err) {
-        console.error('Error connecting to the database:', err.stack);
-        return;
+async function connectDatabase() {
+    try{
+        connection = await mysql.createConnection({
+            host: process.env.host,
+            user: process.env.user,
+            password: process.env.password,
+            database: process.env.database,
+            port: process.env.port
+        });
+        console.log('Connected to the database');
+    } catch (err) {
+        console.error('Error connecting to the database', err.stack);
     }
-    console.log('Connected to the database');
-});
+}
 
-// function executeQuery(query, params, res) {
-//     connection.query(query, params, (error, results, fields) => {
-//         if (error) {
-//             console.error('Database query error:', error);
-//             res.status(500).send('Database query error\n');
-//             return;
-//         }
+await connectDatabase(); 
 
-//         res.status(200).json(results);
-//     });
-// }
-
-// module.exports={
-//     executeQuery
-// }
   
-export function executeQuery(query, params, res) {
-    connection.query(query, params, (error, results, fields) => {
-        if (error) {
-            console.error('Database query error:', error);
-            res.status(500).send('Database query error\n');
-            return;
-        }
-
+export async function executeQuery(query, params, res) {
+    if (!connection) {
+        return res.status(500).send('Database connection not established.');
+    }
+    try {
+        const [results] = await connection.query(query,params);
         res.status(200).json(results);
-    });
+        //return results;
+    } catch (error) {
+        console.error('Database querry error: ', error);
+        res.status(500).send('Database query error\n');
+    }
 }
