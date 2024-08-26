@@ -1,17 +1,19 @@
 "use strict"
 
 import express from 'express'
-import { executeQuery, executeQueryDashboard } from './database-setup.js'
+import { executeQuery } from './database-setup.js'
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
 
 const __filename = fileURLToPath(import.meta.url);
 
+
 // Express App
 const app = express();
 app.use(express.json());
 app.use(cors());
+
 
 // Middleware
 app.use((req, res, next) => {
@@ -32,6 +34,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__filename, '../public/index.html'))
 })
 
+
 app.get('/api', (req, res) => {
   res.send('This API is live!')
 })
@@ -39,7 +42,12 @@ app.get('/api', (req, res) => {
 
 app.get('/user', (req, res) => {
   const query = `SELECT * from user;`;
-  executeQuery(query,[],res);
+  executeQuery(query,[],res).then((result) => {
+    res.status(200).json(result);
+  })
+  .catch(error => {
+    res.status(500).json({ error: 'Failed to add Purchase' });
+  });
 });
 
 
@@ -58,7 +66,7 @@ app.get('/dashboard', async (req,res) => {
       params.push(city, state);
     }
 
-    const results = await executeQueryDashboard(query, params, res);
+    const results = await executeQuery(query, params, res);
 
     const jobCounts = {};
     results.forEach((employee) => {
@@ -68,10 +76,10 @@ app.get('/dashboard', async (req,res) => {
 
     res.json({ jobCounts });
   } catch (error) {
-    console.error('Database query error:', error);
     res.status(500).json({ error: 'Database query error' });
   }
 });
+
 
 app.get('/profit', (req, res) => {
   const query = `
@@ -105,13 +113,53 @@ app.get('/profit', (req, res) => {
                 bu ON sel.id_company = bu.id_company)
             Select id_company, (tot_investment - tot_sold) as PL FROM principal   
   `;
-  executeQuery(query,[],res);
+  
+  executeQuery(query,[],res).then((result) => {
+    res.status(200).json(result);
+  })
+  .catch(error => {
+    res.status(500).json({ error: 'Failed to add Purchase' });
+  });
 });
+
+
+app.post('/purchase', function (req, res) {
+  const {id_transactionb, bdate, stocks_bought, cost, tot_investment, id, id_company, id_stock} = req.body;
+  
+  const query = `INSERT INTO buy (id_transactionb, bdate, stocks_bought, cost, tot_investment, id, id_company, id_stock) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?);`;
+
+  executeQuery(query, [id_transactionb, bdate, stocks_bought, cost, tot_investment, id, id_company, id_stock],res)
+  .then(() => {
+    res.status(200).json({ message: 'Purchase added successfully' });
+  })
+  .catch(error => {
+    res.status(500).json({ error: 'Failed to add Purchase' });
+  });
+});
+
+
+app.post('/sale', function (req, res) {
+  const {id_transactions, sdate, stocks_sold, adj_cost, tot_sold, id, id_company, id_stock} = req.body;
+  
+  const query = `INSERT INTO sell (id_transactions, sdate, stocks_sold, adj_cost, tot_sold, id, id_company, id_stock) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?);`;
+
+  executeQuery(query, [id_transactions, sdate, stocks_sold, adj_cost, tot_sold, id, id_company, id_stock], res)
+  .then(() => {
+    res.status(200).json({ message: 'Sale added successfully' });
+  })
+  .catch(error => {
+    res.status(500).json({ error: 'Failed to add Sale' });
+  });
+});
+
 
 // Catch-all route for any other requests
 app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
+
 
 const port = 4001;
 app.listen(port, () => {
