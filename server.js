@@ -34,6 +34,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__filename, '../public/index.html'))
 })
 
+app.get('/portfolio', (req, res) => {
+  res.sendFile(path.join(__filename, '../public/portfolio.html'))
+})
+
+
 app.get('/purchase', (req, res) => {
   res.sendFile(path.join(__filename, '../public/purchase.html'))
 })
