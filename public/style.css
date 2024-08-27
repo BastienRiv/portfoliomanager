@@ -23,4 +23,7 @@ body {
     height: 400px; /* Establece la altura del canvas */
 }
 
-  
+canvas {
+    width: 100% !important;
+    height: 400px !important; /* Adjust the height as needed */
+}

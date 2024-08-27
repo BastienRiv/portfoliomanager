@@ -1,40 +1,43 @@
 "use strict"
 
 import express from 'express'
-import { executeQuery, executeQueryDashboard } from './database-setup.js'
+import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import cors from 'cors';
+
+import { executeQuery, executeQueryDashboard } from './database-setup.js'
+import performanceRouter from './routes/performance.js';
 
 const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Express App
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Middleware
-app.use((req, res, next) => {
-  console.log('--- Incoming Request --- ' + "Time: " + Date.now());
-  console.log('Method: ' + req.method + ' | URL: ' + req.originalUrl);
-  console.log('Headers:', JSON.stringify(req.headers, null, 2));
-  console.log('Body:', JSON.stringify(req.body, null, 2));
-  console.log('Query Params:', JSON.stringify(req.query, null, 2));
-  console.log('------------------------');
-  next();
-});
+// // Middleware
+// app.use((req, res, next) => {
+//   console.log('--- Incoming Request --- ' + "Time: " + Date.now());
+//   console.log('Method: ' + req.method + ' | URL: ' + req.originalUrl);
+//   console.log('Headers:', JSON.stringify(req.headers, null, 2));
+//   console.log('Body:', JSON.stringify(req.body, null, 2));
+//   console.log('Query Params:', JSON.stringify(req.query, null, 2));
+//   console.log('------------------------');
+//   next();
+// });
 
+app.use('/api/performance', performanceRouter);
 
-app.use(express.static(path.join(__filename, 'public')));
-
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__filename, '../public/index.html'))
-})
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 app.get('/api', (req, res) => {
-  res.send('This API is live!')
-})
+  res.send('This API is live!');
+});
 
 
 app.get('/user', (req, res) => {

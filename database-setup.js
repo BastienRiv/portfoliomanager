@@ -30,10 +30,12 @@ export async function executeQuery(query, params, res) {
     }
     try {
         const [results] = await connection.query(query,params);
-        res.status(200).json(results);
+        // res.status(200).json(results);
+        return results;
     } catch (error) {
         console.error('Database querry error: ', error);
         res.status(500).send('Database query error\n');
+        return null;
     }
 }
 
