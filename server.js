@@ -34,13 +34,17 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__filename, '../public/index.html'))
 })
 
+app.get('/purchase', (req, res) => {
+  res.sendFile(path.join(__filename, '../public/purchase.html'))
+})
+
 
 app.get('/api', (req, res) => {
   res.send('This API is live!')
 })
 
 
-app.get('/user', (req, res) => {
+app.get('/api/user', (req, res) => {
   const query = `SELECT * from user;`;
   executeQuery(query,[],res).then((result) => {
     res.status(200).json(result);
@@ -51,7 +55,7 @@ app.get('/user', (req, res) => {
 });
 
 
-app.get('/dashboard', async (req,res) => {
+app.get('/api/dashboard', async (req,res) => {
   try {
     const { city, state } = req.query;
     let query = `
@@ -81,7 +85,7 @@ app.get('/dashboard', async (req,res) => {
 });
 
 
-app.get('/profit', (req, res) => {
+app.get('/api/profit', (req, res) => {
   const query = `
                 WITH bu AS (
                 SELECT id_company, SUM(tot_investment) AS tot_investment
@@ -123,7 +127,7 @@ app.get('/profit', (req, res) => {
 });
 
 
-app.post('/purchase', function (req, res) {
+app.post('/api/purchase', function (req, res) {
   const {id_transactionb, bdate, stocks_bought, cost, tot_investment, id, id_company, id_stock} = req.body;
   
   const query = `INSERT INTO buy (id_transactionb, bdate, stocks_bought, cost, tot_investment, id, id_company, id_stock) 
