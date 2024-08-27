@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function initialChart() {
     try {
-        const response = await fetch('http://localhost:4001/dashboard');
+        const response = await fetch('http://localhost:4001/api/dashboard');
         const data = await response.json();
     
         const jobCounts = data.jobCounts;
