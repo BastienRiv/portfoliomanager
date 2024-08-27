@@ -39,8 +39,14 @@ These instructions will get you a copy of the project up and running on your loc
 
 4. **Build and run the project:**
     ```bash
-    node index.js
+    npm run start
     ```
 
     Navigate to `http://localhost:4001` in your web browser.
 
+If you want to use a dockerised database, you can run `docker compose up -d` to use the database
+
+## Pages
+
+
+- `/portfolio` shows you details about your current porfolio - how many stocks you hold, their value, etc.
