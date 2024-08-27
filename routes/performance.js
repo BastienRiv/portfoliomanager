@@ -4,6 +4,7 @@ import { executeQuery } from '../database-setup.js'
 const performanceRouter = express.Router();
 
 performanceRouter.get('/', async (req, res) => {
+  console.log("PASOU!")
     try {
       const { id_company } = req.query;
   
@@ -17,8 +18,9 @@ performanceRouter.get('/', async (req, res) => {
       const lineChartData = lineChartResults.map((row) => row.adj_close);
   
       query = queryForCircleCharts();
-
       const circleChartResults = await executeQuery(query, [id_company], res);
+console.log(circleChartResults)
+
       const profitLoss = circleChartResults[0].PL;
   
       res.send({
