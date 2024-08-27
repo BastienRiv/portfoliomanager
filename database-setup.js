@@ -38,16 +38,3 @@ export async function executeQuery(query, params, res) {
         return null;
     }
 }
-
-export async function executeQueryDashboard(query, params, res) {
-    if (!connection) {
-        return res.status(500).send('Database connection not established.');
-    }
-    try {
-        const [results] = await connection.query(query,params);
-        return results;
-    } catch (error) {
-        console.error('Database querry error: ', error);
-        res.status(500).send('Database query error\n');
-    }
-}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/api/purchase" method="post" id="purchase-form">
+        <label for="company-select">Choose a company</label>
+        <select name="companies" id="company-select">
+        <option value="AAPL">APPLE</option>
+        <option value="AMZN">AMAZON</option>
+    </select>
+    <input type="submit" value="Store info" />
+    </form>
+    
+    <script>
+        const form = document.querySelector("#purchase-form")
+
+        form.addEventListener('submit', function(event){
+            event.preventDefault();
+            console.log(form);
+
+            const formData = new FormData(form)
+            const company  = formData.get('companies')
+            fetch('/api/purchase', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "id_transactionb": "5-4-5-2-1", 
+                    "bdate":"2024-08-23", 
+                    "stocks_bought":1,
+                    "cost":1,
+                    "tot_investment":1,
+                    "id":1,
+                    "id_company":company,
+                    "id_stock":"2023-08-21NFLX1013"
+                })
+            });
+        })
+    </script>
+</body>
+</html>

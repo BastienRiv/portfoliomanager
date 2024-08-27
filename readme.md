@@ -23,6 +23,15 @@ npm install mysql
 ```
 - Build and run the project
 ```
-node index.js
+npm run start
 ```
   Navigate to `http://localhost:4000`
+
+If you want to use a dockerised database, you can run `docker compose up -d` to use the database
+
+
+
+## Pages
+
+
+- `/portfolio` shows you details about your current porfolio - how many stocks you hold, their value, etc.
