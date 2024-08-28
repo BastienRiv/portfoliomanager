@@ -30,8 +30,12 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__filename, 'public')));
 
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__filename, '../public/index.html'))
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__filename, '../public/index.html'))
+// })
+
+app.get('/homepage', (req, res) => {
+  res.sendFile(path.join(__filename, '../public/homepage.html'))
 })
 
 app.get('/portfolio', (req, res) => {
@@ -131,7 +135,6 @@ app.get('/api/profit', (req, res) => {
   });
 });
 
-
 app.post('/api/purchase', function (req, res) {
   const {id_transactionb, bdate, stocks_bought, cost, tot_investment, id, id_company, id_stock} = req.body;
   
@@ -163,6 +166,24 @@ app.post('/sale', function (req, res) {
   });
 });
 
+//
+app.get('/api/stocks', async (req, res) => {
+  try {
+    const query = `
+      SELECT id_company,opening_cost, closing_cost,adj_close,max_cost, min_cost, volume, sdate, id_stock      
+      FROM stocks
+      WHERE sdate = (SELECT MAX(sdate) FROM stocks)
+      ORDER BY sdate DESC;
+    `;
+
+    const results = await executeQuery(query, [], res);
+    res.json(results);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching stock data' });
+  }
+});
+
+//
 
 // Catch-all route for any other requests
 app.use((req, res) => {

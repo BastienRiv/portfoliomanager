@@ -1,26 +1,30 @@
-/* public/style.css */
+/* style.css */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
-  }
-  
-  h1 {
-    text-align: center;
-    color: #333;
-  }
-  
-  canvas {
-    display: block;
-    margin: 0 auto;
-    max-width: 1000px;
-  }
-
-  /* Definir el tamaño del canvas en CSS */
-#myChart {
-    width: 100%; /* Ajusta el ancho del canvas al 100% del contenedor */
-    height: 400px; /* Establece la altura del canvas */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-  
+.welcome-section {
+  /* background-image: url('/images/background.jpg'); */
+  background-image: url(https://wallpapers.com/images/hd/visual-painting-of-investment-1eprffu1fvb8wm2k.jpg);
+  background-size: cover;
+  background-position: center;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+}
+
+.features-section {
+  padding: 80px 0;
+}
+
+footer {
+  padding: 20px 0;
+}
