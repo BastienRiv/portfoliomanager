@@ -47,6 +47,11 @@ app.get('/purchase', (req, res) => {
 })
 
 
+app.get('/sale', (req, res) => {
+  res.sendFile(path.join(__filename, '../public/sale.html'))
+})
+
+
 app.get('/api', (req, res) => {
   res.send('This API is live!');
 });
@@ -66,6 +71,19 @@ app.get('/api/user', (req, res) => {
 app.get('/api/companies', (req, res) => {
   const query = `SELECT id_company, cname from company;`;
   executeQuery(query,[],res).then((result) => {
+    res.status(200).json(result);
+  })
+  .catch(error => {
+    res.status(500).json({ error: 'Failed' });
+  });
+});
+
+app.get('/api/stockprice', (req, res) => {
+  const {id_company, sdate} = req.query;
+  
+  const query = `select adj_close from stocks where id_company= ? and sdate = ?;`;
+
+  executeQuery(query, [id_company, sdate],res).then((result) => {
     res.status(200).json(result);
   })
   .catch(error => {
