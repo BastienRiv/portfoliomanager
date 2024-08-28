@@ -1,40 +1,38 @@
 import express from 'express';
-import { executeQuery } from '../database-setup.js'
+import { executeQuery } from '../database-setup.js';
 
 const performanceRouter = express.Router();
 
 performanceRouter.get('/', async (req, res) => {
-  console.log("PASOU!")
     try {
-      const { id_company } = req.query;
-  
-      // Obtener la lista de empresas
-      const companies = await executeQuery('SELECT DISTINCT id_company FROM portfolio.stocks', [], res);
-      
-      // Obtener los datos para el gráfico de línea
-      let query = `SELECT sdate, adj_close FROM stocks WHERE id_company = ?`;
-      const lineChartResults = await executeQuery(query, [id_company], res);
-      const lineChartLabels = lineChartResults.map((row) => row.sdate);
-      const lineChartData = lineChartResults.map((row) => row.adj_close);
-  
-      query = queryForCircleCharts();
-      const circleChartResults = await executeQuery(query, [id_company], res);
-console.log(circleChartResults)
+        const { id_company } = req.query;
 
-      const profitLoss = circleChartResults[0].PL;
-  
-      res.send({
-        id_company,
-        companies,
-        lineChartLabels,
-        lineChartData,
-        profitLoss
-      });
+        // Obtener la lista de empresas
+        const companies = await executeQuery('SELECT DISTINCT id_company FROM portfolio.stocks', [], res);
+
+        // Obtener los datos para el gráfico de línea
+        let query = `SELECT sdate, adj_close FROM stocks WHERE id_company = ?`;
+        const lineChartResults = await executeQuery(query, [id_company], res);
+        const lineChartLabels = lineChartResults.map((row) => row.sdate);
+        const lineChartData = lineChartResults.map((row) => row.adj_close);
+
+        query = queryForCircleCharts();
+        const circleChartResults = await executeQuery(query, [id_company], res);
+
+        const profitLoss = circleChartResults[0].PL;
+
+        res.send({
+            id_company,
+            companies,
+            lineChartLabels,
+            lineChartData,
+            profitLoss,
+        });
     } catch (error) {
-      console.error('Database query error:', error);
-      res.status(500).json({ error: 'Database query error' });
+        console.error('Database query error:', error);
+        res.status(500).json({ error: 'Database query error' });
     }
-  });
+});
 
 function queryForCircleCharts() {
     return `
@@ -72,5 +70,4 @@ function queryForCircleCharts() {
     WHERE id_company = ?`;
 }
 
- 
 export default performanceRouter;

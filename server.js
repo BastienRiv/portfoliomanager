@@ -18,12 +18,12 @@ app.use(cors());
 
 // Middleware
 app.use((req, res, next) => {
-    console.log('--- Incoming Request --- ' + 'Time: ' + Date.now());
-    console.log('Method: ' + req.method + ' | URL: ' + req.originalUrl);
-    console.log('Headers:', JSON.stringify(req.headers, null, 2));
-    console.log('Body:', JSON.stringify(req.body, null, 2));
-    console.log('Query Params:', JSON.stringify(req.query, null, 2));
-    console.log('------------------------');
+    console.info('--- Incoming Request --- ' + 'Time: ' + Date.now());
+    console.info('Method: ' + req.method + ' | URL: ' + req.originalUrl);
+    console.info('Headers:', JSON.stringify(req.headers, null, 2));
+    console.info('Body:', JSON.stringify(req.body, null, 2));
+    console.info('Query Params:', JSON.stringify(req.query, null, 2));
+    console.info('------------------------');
     next();
 });
 
@@ -158,15 +158,16 @@ app.get('/api/profit', (req, res) => {
         });
 });
 
-app.get('/api/purchases/:id_company', (req, res) => {
+// Gets ALL buy transactions from company
+app.get('/api/transactions/:type/:id_company', (req, res) => {
     const idCompany = req.params.id_company;
+    const type = req.params.type; // type = 'sell' || 'buy'
 
     if (!idCompany) {
         return res.status(400).json({ error: 'id_company route parameter is required: .../:id_company' });
     }
 
-    const query = 'SELECT * FROM buy WHERE id_company = ?';
-
+    const query = `SELECT * FROM ${type} WHERE id_company = ?`;
     executeQuery(query, [idCompany], res)
         .then((results) => {
             res.status(200).json(results);
@@ -213,5 +214,5 @@ app.use((req, res) => {
 
 const port = 4001;
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
+    console.info(`Server running at http://localhost:${port}/`);
 });
