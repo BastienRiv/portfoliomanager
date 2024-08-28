@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectElement = document.querySelector('#company-select');
             companies.forEach((company) => {
                 const option = document.createElement('option');
-                option.value = company.id_company; // Assuming 'id' is the value you need
-                option.textContent = company.cname; // Display name in dropdown
+                option.value = company.id_company;
+                option.textContent = company.cname;
                 selectElement.appendChild(option);
             });
         })
@@ -21,6 +21,28 @@ document.addEventListener('DOMContentLoaded', function () {
     // Set the date input field to today's date
     const today = new Date().toISOString().split('T')[0];
     document.querySelector('#bdate').value = today;
+
+    // Fetch stock price when company or date changes
+    document.querySelector('#company-select').addEventListener('change', fetchStockPrice);
+    document.querySelector('#bdate').addEventListener('change', fetchStockPrice);
+
+    function fetchStockPrice() {
+        const company = document.querySelector('#company-select').value;
+        const date = document.querySelector('#bdate').value;
+
+        if (company && date) {
+            fetch(`/api/stockprice?company=${company}&date=${date}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data && data.price) {
+                        document.querySelector('#cost').value = data.price.toFixed(3);
+                    } else {
+                        document.querySelector('#cost').value = ''; // Clear if no price found
+                    }
+                })
+                .catch((error) => console.error('Error fetching stock price:', error));
+        }
+    }
 });
 
 const form = document.querySelector('#purchase-form');
