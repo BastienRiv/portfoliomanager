@@ -112,7 +112,6 @@ async function loadData() {
         .then((response) => response.json())
         .then((data) => {
             pagePurchase.companiesList = data;
-            console.log(pagePurchase);
             populateCompaniesList(pagePurchase);
         })
         .catch((error) => console.error('Error loading the content:', error));
