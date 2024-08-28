@@ -2,8 +2,15 @@ const pagePurchase = {
     companiesList: [],
 };
 
-loadData();
+// Call the function to load data on page load
+document.addEventListener('DOMContentLoaded', () => {
+    handleTabs();
 
+    loadCompanyList();
+    loadBuyTable();
+});
+
+// TODO: Move this into a separate function and call above
 document.addEventListener('DOMContentLoaded', function () {
     fetch('/api/companies')
         .then((response) => response.json())
@@ -82,7 +89,7 @@ form.addEventListener('submit', function (event) {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function () {
+function handleTabs() {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
 
@@ -90,24 +97,20 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function () {
             const tabId = this.getAttribute('data-tab');
 
-            // Remove active class from all buttons
             tabButtons.forEach((btn) => btn.classList.remove('active'));
 
-            // Hide all tab contents
             tabContents.forEach((content) => (content.style.display = 'none'));
 
-            // Show the selected tab content
             document.getElementById(tabId).style.display = 'block';
 
-            // Add active class to the clicked button
             this.classList.add('active');
         });
     });
-});
+}
 
-// Load Initial Page data and populate
+// API connections
 
-async function loadData() {
+async function loadCompanyList() {
     return fetch(`http://localhost:4001/api/companies`)
         .then((response) => response.json())
         .then((data) => {
@@ -115,13 +118,52 @@ async function loadData() {
             populateCompaniesList(pagePurchase);
         })
         .catch((error) => console.error('Error loading the content:', error));
+
+    function populateCompaniesList(pagePurchase) {
+        const companiesListElement = document.getElementById('companies-list');
+        companiesListElement.innerHTML = '';
+        pagePurchase.companiesList.forEach((company) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `(${company.id_company}) ${company.cname}`;
+            listItem.addEventListener('click', () => {
+                loadBuyTable(company.id_company);
+            });
+            companiesListElement.appendChild(listItem);
+        });
+    }
 }
 
-function populateCompaniesList(pagePurchase) {
-    const companiesListElement = document.getElementById('companies-list');
-    pagePurchase.companiesList.forEach((company) => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `(${company.id_company}) ${company.cname}`;
-        companiesListElement.appendChild(listItem);
-    });
+async function loadBuyTable(id_company = 'AMZN') {
+    try {
+        const response = await fetch('http://localhost:4001/api/purchases/' + id_company);
+        const transactions = await response.json();
+
+        const tableBody = document.querySelector('#transactions-table tbody');
+        tableBody.innerHTML = ''; // Clear any existing rows
+        console.log(transactions);
+        transactions.forEach((transaction) => {
+            const row = document.createElement('tr');
+
+            // Create and append cells
+            const idCell = document.createElement('td');
+            idCell.textContent = transaction.id_transactionb;
+            row.appendChild(idCell);
+
+            const dateCell = document.createElement('td');
+            dateCell.textContent = new Date(transaction.bdate).toLocaleDateString();
+            row.appendChild(dateCell);
+
+            const stocksCell = document.createElement('td');
+            stocksCell.textContent = transaction.stocks_bought;
+            row.appendChild(stocksCell);
+
+            const costCell = document.createElement('td');
+            costCell.textContent = transaction.cost.toFixed(2);
+            row.appendChild(costCell);
+
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error loading transactions:', error);
+    }
 }

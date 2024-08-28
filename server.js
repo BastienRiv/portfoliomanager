@@ -158,6 +158,24 @@ app.get('/api/profit', (req, res) => {
         });
 });
 
+app.get('/api/purchases/:id_company', (req, res) => {
+    const idCompany = req.params.id_company;
+
+    if (!idCompany) {
+        return res.status(400).json({ error: 'id_company route parameter is required: .../:id_company' });
+    }
+
+    const query = 'SELECT * FROM buy WHERE id_company = ?';
+
+    executeQuery(query, [idCompany], res)
+        .then((results) => {
+            res.status(200).json(results);
+        })
+        .catch((error) => {
+            res.status(500).json({ error: 'Failed to retrieve purchases' });
+        });
+});
+
 app.post('/api/purchase', function (req, res) {
     const { id_transactionb, bdate, stocks_bought, cost, tot_investment, id, id_company, id_stock } = req.body;
 
