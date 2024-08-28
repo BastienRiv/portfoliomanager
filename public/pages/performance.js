@@ -86,7 +86,7 @@ function updateChart() {
     });
 }
 
-async function loadData(id_company = 'AAPL') {
+async function loadData(id_company = 'AMZN') {
     return fetch(`http://localhost:4001/api/performance?id_company=${id_company}`)
         .then(response => response.json())
         .then((data) => {

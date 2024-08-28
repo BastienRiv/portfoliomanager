@@ -58,7 +58,18 @@ app.get('/api/user', (req, res) => {
     res.status(200).json(result);
   })
   .catch(error => {
-    res.status(500).json({ error: 'Failed to add Purchase' });
+    res.status(500).json({ error: 'Failed' });
+  });
+});
+
+
+app.get('/api/companies', (req, res) => {
+  const query = `SELECT id_company, cname from company;`;
+  executeQuery(query,[],res).then((result) => {
+    res.status(200).json(result);
+  })
+  .catch(error => {
+    res.status(500).json({ error: 'Failed' });
   });
 });
 
@@ -151,7 +162,7 @@ app.post('/api/purchase', function (req, res) {
 });
 
 
-app.post('/sale', function (req, res) {
+app.post('/api/sale', function (req, res) {
   const {id_transactions, sdate, stocks_sold, adj_cost, tot_sold, id, id_company, id_stock} = req.body;
   
   const query = `INSERT INTO sell (id_transactions, sdate, stocks_sold, adj_cost, tot_sold, id, id_company, id_stock) 
