@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch('/api/companies')
         .then((response) => response.json())
         .then((companies) => {
-            const selectElement = document.querySelector('#company-select');
+            const selectElement = document.querySelector('#company-select-purchase');
             companies.forEach((company) => {
                 const option = document.createElement('option');
                 option.value = company.id_company;
@@ -30,19 +30,26 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('#bdate').value = today;
 
     // Fetch stock price when company or date changes
-    document.querySelector('#company-select').addEventListener('change', fetchStockPrice);
+    document.querySelector('#company-select-purchase').addEventListener('change', fetchStockPrice);
     document.querySelector('#bdate').addEventListener('change', fetchStockPrice);
 
     function fetchStockPrice() {
-        const company = document.querySelector('#company-select').value;
+        const company = document.querySelector('#company-select-purchase').value;
         const date = document.querySelector('#bdate').value;
-
+    
         if (company && date) {
-            fetch(`/api/stockprice?company=${company}&date=${date}`)
-                .then((response) => response.json())
+            console.log('Fetching stock price for company:', company, 'and date:', date);
+            fetch(`/api/stockprice?id_company=${company}&sdate=${date}`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
                 .then((data) => {
-                    if (data && data.price) {
-                        document.querySelector('#cost').value = data.price.toFixed(3);
+                    console.log('Data received from API:', data);
+                    if (data && data.length > 0 && data[0].adj_close) {
+                        document.querySelector('#cost').value = data[0].adj_close.toFixed(3);
                     } else {
                         document.querySelector('#cost').value = ''; // Clear if no price found
                     }
@@ -50,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .catch((error) => console.error('Error fetching stock price:', error));
         }
     }
+    
 });
 
 const form = document.querySelector('#purchase-form');
@@ -167,3 +175,89 @@ async function loadBuyTable(id_company = 'AMZN') {
         console.error('Error loading transactions:', error);
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('/api/companies')
+        .then((response) => response.json())
+        .then((companies) => {
+            const selectElement = document.querySelector('#company-select-sale');
+            companies.forEach((company) => {
+                const option = document.createElement('option');
+                option.value = company.id_company;
+                option.textContent = company.cname;
+                selectElement.appendChild(option);
+            });
+        })
+        .catch((error) => console.error('Error fetching companies:', error));
+
+    // Set the date input field to today's date
+    const today = new Date().toISOString().split('T')[0];
+    document.querySelector('#sdate').value = today;
+
+    // Fetch stock price when company or date changes
+    document.querySelector('#company-select-sale').addEventListener('change', fetchStockPriceSale);
+    document.querySelector('#sdate').addEventListener('change', fetchStockPriceSale);
+
+    function fetchStockPriceSale() {
+        const company = document.querySelector('#company-select-sale').value;
+        const date = document.querySelector('#sdate').value;
+    
+        if (company && date) {
+            console.log('Fetching stock price for company:', company, 'and date:', date);
+            fetch(`/api/stockprice?id_company=${company}&sdate=${date}`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log('Data received from API:', data);
+                    if (data && data.length > 0 && data[0].adj_close) {
+                        document.querySelector('#adj_cost').value = data[0].adj_close.toFixed(3);
+                    } else {
+                        document.querySelector('#adj_cost').value = ''; // Clear if no price found
+                    }
+                })
+                .catch((error) => console.error('Error fetching stock price:', error));
+        }
+    }
+    
+});
+
+const formSale = document.querySelector("#sale-form")
+
+formSale.addEventListener('submit', function(event){
+    event.preventDefault();
+
+    const formSale = new FormData(formSale)
+     
+    const sdate = formSaleData.get('sdate');
+    const stocksSold = formSale.get('stocks_sold');
+    const adj_cost = formSale.get('adj_cost');
+    const totalSold = (stocksSold * adj_cost).toFixed(3);
+    const user = 1;
+    const company = formSale.get('companies')
+    const stockId = sdate + company;
+    const idTransaction = stocksSold + stockId + user;
+
+    // Constructing the data object with variables
+    const soldData = {
+        id_transactions: idTransaction,
+        sdate: sdate,
+        stocks_sold: stocksSold,
+        adj_cost: adj_cost,
+        tot_sold: totalSold,
+        id: user,
+        id_company: company,
+        id_stock: null
+    };
+
+    fetch('/api/sale', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(soldData)
+    });
+})

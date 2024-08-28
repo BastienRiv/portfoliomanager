@@ -18,8 +18,8 @@
                     <div class="tab-content" id="tab1">
                         <!-- Buy form -->
                         <form action="/api/purchase" method="post" id="purchase-form">
-                            <label for="company-select">Choose a company</label>
-                            <select name="companies" id="company-select">
+                            <label for="company-select-purchase">Choose a company</label>
+                            <select name="companies" id="company-select-purchase">
                                 <!-- Options will be populated dynamically -->
                             </select>
 
@@ -51,7 +51,22 @@
                         </table>
                     </div>
                     <div class="tab-content" id="tab2" style="display: none">
-                        <p>Place here sell form</p>
+                        <form action="/api/sale" method="post" id="sale-form">
+                            <label for="company-select-sale">Choose a company</label>
+                            <select name="companies" id="company-select-sale">
+                            <!-- Options will be populated dynamically -->
+                            </select>
+                            
+                            <label for="sdate">Select a date</label>
+                            <input type="date" id="sdate" name="sdate" required />
+                    
+                            <label for="stocks_sold">Enter the number of stocks sold</label>
+                            <input type="number" id="stocks_sold" name="stocks_sold" min="1" max="9999" required />
+                    
+                            <label for="adj_cost">Enter the cost per stock</label>
+                            <input type="number" id="adj_cost" name="adj_cost" min="0.01" step="0.001" required readonly/>
+                    
+                            <input type="submit" value="Ok" />
                     </div>
                 </div>
             </div>
