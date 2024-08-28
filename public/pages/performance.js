@@ -1,4 +1,4 @@
-console.log("Running performance page script...");
+console.log('Running performance page script...');
 
 let performancePageData = {};
 let lineChart = null;
@@ -11,23 +11,22 @@ function changeCompany(id_company) {
 function setupNavbar(data) {
     const { companies } = data;
     // Populate company list
-    document.getElementById("companies-list").innerHTML = companies.map((company) => `
+    document.getElementById('companies-list').innerHTML = companies
+        .map(
+            (company) => `
         <li class="nav-item">
             <a class="nav-link" href="javascript:void(0);" onclick="changeCompany('${company.id_company}')">${company.id_company}</a>
         </li>
-    `).join('');
+    `
+        )
+        .join('');
 }
 
 function updateChart() {
-    const {
-        id_company,
-        lineChartLabels,
-        lineChartData,
-        profitLoss
-    } = performancePageData;
+    const { id_company, lineChartLabels, lineChartData, profitLoss } = performancePageData;
 
-    document.getElementById("company-id").innerHTML = `Company ID: ${id_company}`;
-    document.getElementById("latest-adjusted-close").innerHTML = `Latest Adjusted Close: ${lineChartData[lineChartData.length - 1]}`;
+    document.getElementById('company-id').innerHTML = `Company ID: ${id_company}`;
+    document.getElementById('latest-adjusted-close').innerHTML = `Latest Adjusted Close: ${lineChartData[lineChartData.length - 1]}`;
 
     // Destroy existing line chart if it exists
     if (lineChart) {
@@ -40,21 +39,23 @@ function updateChart() {
         type: 'line',
         data: {
             labels: lineChartLabels,
-            datasets: [{
-                label: 'Adjusted Close',
-                data: lineChartData,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
+            datasets: [
+                {
+                    label: 'Adjusted Close',
+                    data: lineChartData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                },
+            ],
         },
         options: {
             scales: {
                 y: {
-                    beginAtZero: false
-                }
-            }
-        }
+                    beginAtZero: false,
+                },
+            },
+        },
     });
 
     // Destroy existing doughnut chart if it exists
@@ -67,11 +68,13 @@ function updateChart() {
     profitLossChart = new Chart(circleCtx, {
         type: 'doughnut',
         data: {
-            datasets: [{
-                data: [profitLoss, 0],
-                backgroundColor: ['#36A2EB', '#CCCCCC'],
-                borderWidth: 0
-            }]
+            datasets: [
+                {
+                    data: [profitLoss, 0],
+                    backgroundColor: ['#36A2EB', '#CCCCCC'],
+                    borderWidth: 0,
+                },
+            ],
         },
         options: {
             responsive: true,
@@ -79,23 +82,23 @@ function updateChart() {
             plugins: {
                 title: {
                     display: true,
-                    text: profitLoss.toFixed(2)
-                }
-            }
-        }
+                    text: profitLoss.toFixed(2),
+                },
+            },
+        },
     });
 }
 
 async function loadData(id_company = 'AMZN') {
     return fetch(`http://localhost:4001/api/performance?id_company=${id_company}`)
-        .then(response => response.json())
+        .then((response) => response.json())
         .then((data) => {
             performancePageData = data;
             performancePageData.id_company = id_company; // Ensure the company ID is set
             setupNavbar(data);
             updateChart();
         })
-        .catch(error => console.error('Error loading the content:', error));
+        .catch((error) => console.error('Error loading the content:', error));
 }
 
 // Initial load with default company
