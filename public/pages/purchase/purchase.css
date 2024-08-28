@@ -1,0 +1,64 @@
+#purchase-page {
+    display: flex;
+    height: 100vh;
+}
+
+#purchase-page .left-column {
+    width: 80%;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+#purchase-page .right-column {
+    width: 20%;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+}
+
+/* Tabs */
+
+#purchase-page .tabs-container {
+    width: 100%;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+#purchase-page .tabs {
+    display: flex;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 10px;
+}
+
+#purchase-page .tab-button {
+    flex: 1;
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+#purchase-page .tab-button:not(:last-child) {
+    border-right: 1px solid #ddd;
+}
+
+#purchase-page .tab-button:hover {
+    background-color: #ececec;
+}
+
+#purchase-page .tab-button.active {
+    background-color: #ffffff;
+    border-bottom: 2px solid #007bff;
+    color: #007bff;
+}
+
+#purchase-page .tab-content {
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-top: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
