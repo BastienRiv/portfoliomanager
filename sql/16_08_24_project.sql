@@ -120,3 +120,6 @@ CREATE TABLE prediction (
     pdate DATE,
     pcost float
 );
+
+
+INSERT INTO prediction (id_company, pdate, pcost) VALUES ('NFLX', '2024-08-30', 780.98);

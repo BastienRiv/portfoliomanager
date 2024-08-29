@@ -208,6 +208,12 @@
     <script>
       // Gráfico de línea
       const lineCtx = document.getElementById('lineChart').getContext('2d');
+
+      fetch("/api/finance?id_company=NFLX").then(
+        response => response.json()
+      ).then(data => {
+        const { lineChartData, lineChartLabels, profitLossPercentage, plPercentage } = data;
+      });
       new Chart(lineCtx, {
         type: 'line',
         data: {
