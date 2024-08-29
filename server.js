@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 
 import { executeQuery } from "./database-setup.js";
 import performanceRouter from "./routes/performance.js";
+import { financePageRouter } from "./routes/finance-page.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,10 +30,20 @@ app.use((req, res, next) => {
 
 app.use("/api/performance", performanceRouter);
 
+app.get("/finance", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "finance.html"));
+});
+
+app.use("/api/finance/", financePageRouter);
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.get("/homepage", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "homepage.html"));
 });
 
 app.get("/portfolio", (req, res) => {

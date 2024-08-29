@@ -4,38 +4,65 @@
     box-sizing: border-box;
 }
 
-body,
-html {
+html,
+body {
     height: 100%;
-    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-/* public/style.css */
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-h1 {
-    text-align: center;
-    color: #333;
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-canvas {
-    display: block;
-    margin: 0 auto;
-    max-width: 1000px;
+.user-info .username {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
-/* Definir el tamaño del canvas en CSS */
-#myChart {
-    width: 100%; /* Ajusta el ancho del canvas al 100% del contenedor */
-    height: 400px; /* Establece la altura del canvas */
+.user-info .user-picture {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
 }
 
-canvas {
-    width: 100% !important;
-    height: 400px !important; /* Adjust the height as needed */
+.welcome-section {
+  background-image: url(https://wallpapers.com/images/hd/visual-painting-of-investment-1eprffu1fvb8wm2k.jpg);
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(0, 0, 0, 1); /* Darker background */
+  flex-grow: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  padding: 100px 0;
+}
+
+.welcome-section .btn-primary {
+    background-color: #ee3524;
+    border-color: #ee3524;
+}
+
+.features-section {
+    padding: 60px 0;
+    flex-grow: 1;
+}
+
+footer {
+  padding: 20px 0;
+  margin-top: auto;
 }

@@ -33,5 +33,5 @@ export async function executeQuery(query, params, res) {
     } catch (error) {
         console.error('Database querry error: ', error);
         return null;
-    }
+    } 
 }

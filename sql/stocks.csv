@@ -1,4 +1,4 @@
-sdate,opening_cost,max_cost,min_cost,ending_cost,Adj Close,volume,cname,id_stock
+sdate,opening_cost,max_cost,min_cost,closing_cost,adj_close,volume,id_company,id_stock
 2023-08-21,175.070007,176.130005,173.740005,175.839996,174.944778,46311900,AAPL,2023-08-21AAPL1
 2023-08-22,177.059998,177.679993,176.25,177.229996,176.327698,42084200,AAPL,2023-08-22AAPL2
 2023-08-23,178.520004,181.550003,178.330002,181.119995,180.197906,52722800,AAPL,2023-08-23AAPL3

@@ -1,4 +1,4 @@
-id_transactionb,bdate,stocks_cuantity,cost,tot_investment,id,id_company,id_stock
+id_transactionb,bdate,stocks_bought,cost,tot_investment,id,id_company,id_stock
 22023-08-30AAPL81,2023-08-30,2,184.740005,369.48001,2,AAPL,2023-08-30AAPL8
 32023-12-19AAPL851,2023-12-19,3,196.940002,590.820006,1,AAPL,2023-12-19AAPL85
 42024-03-28AMZN9121,2024-03-28,4,181.699997,726.799988,2,AMZN,2024-03-28AMZN912
