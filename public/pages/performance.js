@@ -9,7 +9,7 @@ function changeCompany(id_company) {
 function setupNavbar(data) {
     const { companies } = data;
     // Populate company list
-    document.getElementById('companies-list').innerHTML = companies
+    const companiesList = companies
         .map(
             (company) => `
         <li class="nav-item">
@@ -18,6 +18,9 @@ function setupNavbar(data) {
     `
         )
         .join('');
+
+    // document.getElementById('companies-list').innerHTML = companiesList;
+    document.getElementById('companies').innerHTML = companiesList;
 }
 
 function updateChart() {

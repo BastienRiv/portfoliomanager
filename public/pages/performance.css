@@ -1,0 +1,44 @@
+#performance-page-content {
+    display: flex;
+}
+
+#sidebar {
+    height: 100vh;
+    /* position: fixed; */
+    left: 0;
+    top: 500;
+    width: 200px;
+    background-color: white;
+    padding-top: 20px;
+    overflow-y: auto;
+    border-right: 1px solid white;
+    color: black;
+}
+
+#sidebar h4 {
+    color: black;
+}
+
+#sidebar .nav-link {
+    color: green;
+}
+
+#navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: red;
+}
+
+#navbar .navbar-brand {
+    color: white;
+}
+
+#navbar .navbar-brand:hover {
+    color: rgb(207, 207, 207);
+}
+
+#main-content {
+}
