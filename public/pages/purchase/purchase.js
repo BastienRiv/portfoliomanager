@@ -46,19 +46,30 @@ async function loadCompanyList() {
     function populateCompaniesList(pagePurchase) {
         const companiesListElement = document.getElementById('companies-list');
         companiesListElement.innerHTML = '';
+    
         pagePurchase.companiesList.forEach((company) => {
             const listItem = document.createElement('li');
             listItem.textContent = `(${company.id_company}) ${company.cname}`;
             listItem.addEventListener('click', () => {
+                // Update the readonly fields in the forms
+                document.getElementById('company-name-purchase').value = company.cname;
+                document.getElementById('company-name-sale').value = company.cname;
+    
+                // Load tables for the selected company
                 loadTable('buy', company.id_company);
                 loadTable('sell', company.id_company);
+    
+                // Store the selected company's ID in a hidden field or variable
+                document.querySelector('#company-select-purchase').value = company.id_company;
+                document.querySelector('#company-select-sale').value = company.id_company;
             });
+            companiesListElement.appendChild(listItem);
             companiesListElement.appendChild(listItem);
         });
     }
 }
 
-async function loadTable(type, id_company = 'AMZN') {
+async function loadTable(type, id_company = '') {
     try {
         const response = await fetch('http://localhost:4001/api/transactions/' + type + '/' + id_company);
         const transactions = await response.json();
@@ -198,7 +209,19 @@ function manageBuyForm() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(purchaseData),
-        });
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(() => {
+            // Refresh the tables after successful purchase
+            loadTable('buy', company);
+            loadTable('sell', company);
+        })
+        .catch((error) => console.error('Error during purchase:', error));
     });
 }
 
@@ -286,6 +309,18 @@ function manageSalesForm() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(soldData),
-        });
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(() => {
+            // Refresh the tables after successful purchase
+            loadTable('buy', company);
+            loadTable('sell', company);
+        })
+        .catch((error) => console.error('Error during purchase:', error));
     });
 }
