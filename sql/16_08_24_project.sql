@@ -3,9 +3,9 @@ CREATE DATABASE portfolio;
 
 USE portfolio;
 
------------
+-- ---------
 -- USER
-------------
+-- ----------
 -- drop table user;
 
 CREATE TABLE user (
@@ -22,9 +22,9 @@ CREATE TABLE user (
 INSERT INTO user (fname, lname, account, email) VALUES ('Sebastián', 'Hernández',4567890,'sebas@gmail.com');
 INSERT INTO user (fname, lname, account, email) VALUES ('Mariano', 'Rangel',9876543,'mrangel@gmail.com');
 
------------
+-- ---------
 -- COMPANY
-------------
+-- ----------
 CREATE TABLE company (
     id_company varchar (20) PRIMARY KEY,
     cname varchar(20) not null,
@@ -35,9 +35,9 @@ CREATE TABLE company (
 
 INSERT INTO company (id_company, cname, description) VALUES ('NFLX', 'Netflix', 'Netflix, Inc. es una empresa de entretenimiento y una plataforma de streaming estadounidense. Ubicada en Los Gatos, la compañía fue fundada el 29 de agosto de 1997 y un año después comenzó su actividad, ofreciendo un servicio de alquiler de DVD a través del correo postal.​');
 
------------
+-- --------
 -- STOCKS
-------------
+-- ----------
 CREATE TABLE stocks (
     id_stock varchar(20) PRIMARY KEY,
     adj_close float,
@@ -54,12 +54,13 @@ CREATE TABLE stocks (
         ON UPDATE CASCADE
 );
 
-INSERT INTO stocks (id_stock, adj_close, closing_cost, opening_cost, max_cost, min_cost, volume, sdate, id_company) VALUES ('21_nflx_1',780.98,30,50,70,30,9,'2024-08-21','NFLX');
+INSERT INTO stocks (id_stock, adj_close, closing_cost, opening_cost, max_cost, min_cost, volume, sdate, id_company)
+VALUES ('2023-08-21NFLX1013',780.98,30,50,70,30,9,'2024-08-21','NFLX');
 
 
------------
+-- ---------
 -- TRANSACTIONS (BUY)
-------------
+-- ----------
 CREATE TABLE buy (
     id_transactionb varchar(20) PRIMARY KEY,
     bdate date,
@@ -83,9 +84,9 @@ CREATE TABLE buy (
 INSERT INTO buy (id_transactionb, bdate, stocks_bought, cost, tot_investment, id, id_company, id_stock) 
 VALUES ('1-1-1-1-1', '2024-08-22',5,476,8765,2,'NFLX','2023-08-21NFLX1013');
 
------------
+-- ---------
 -- TRANSACTIONS (SELL)
-------------
+-- ----------
 CREATE TABLE sell (
     id_transactions varchar(20) PRIMARY KEY,
     sdate date,
@@ -110,9 +111,9 @@ INSERT INTO sell (id_transactions, sdate, stocks_sold, adj_cost, tot_sold, id, i
 VALUES ('1-1-1-1-1-S', '2024-08-22',1,76,85,2,'NFLX','2023-08-21NFLX1013');
 
 
------------
+-- ---------
 -- PREDICTION
-------------
+-- ----------
 
 CREATE TABLE prediction (
     id_company varchar(20) PRIMARY KEY,
