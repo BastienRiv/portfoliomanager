@@ -23,7 +23,7 @@ function setupNavbar(data) {
 }
 
 function updateChart() {
-    const { id_company, lineChartLabels, lineChartData, profitLoss } = performancePageData;
+    const { id_company, lineChartLabels, lineChartData, profitLoss, prediction } = performancePageData;
 
     document.getElementById('company-id').innerHTML = `Company ID: ${id_company}`;
     document.getElementById('latest-adjusted-close').innerHTML = `Latest Adjusted Close: ${lineChartData[lineChartData.length - 1]}`;
@@ -63,18 +63,19 @@ function updateChart() {
         profitLossChart.destroy();
     }
 
-    // Create new doughnut chart
-    const circleCtx = document.getElementById('profitLossChart').getContext('2d');
-    profitLossChart = new Chart(circleCtx, {
+    // Create new doughnut chart for Profit/Loss
+    const profitLossCtx = document.getElementById('profitLossChart').getContext('2d');
+    profitLossChart = new Chart(profitLossCtx, {
         type: 'doughnut',
         data: {
             datasets: [
                 {
-                    data: [profitLoss, 0],
+                    data: [profitLoss, 100 - profitLoss],
                     backgroundColor: ['#36A2EB', '#CCCCCC'],
                     borderWidth: 0,
                 },
             ],
+            labels: ['Profit/Loss', 'Remaining']
         },
         options: {
             responsive: true,
@@ -82,7 +83,38 @@ function updateChart() {
             plugins: {
                 title: {
                     display: true,
-                    text: profitLoss.toFixed(2),
+                    text: `${profitLoss.toFixed(2)}%`,
+                },
+            },
+        },
+    });
+    
+    // Destroy existing doughnut chart for Prediction if it exists
+    if (predictionChart) {
+        predictionChart.destroy();
+    }
+
+    // Create new doughnut chart for Prediction
+    const predictionCtx = document.getElementById('predictionChart').getContext('2d');
+    predictionChart = new Chart(predictionCtx, {
+        type: 'doughnut',
+        data: {
+            datasets: [
+                {
+                    data: [Math.abs(prediction), 100 - Math.abs(prediction)],
+                    backgroundColor: [prediction >= 0 ? '#4CAF50' : '#FF6384', '#CCCCCC'],
+                    borderWidth: 0,
+                },
+            ],
+            labels: ['Prediction', 'Remaining']
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: `${prediction.toFixed(2)}%`,
                 },
             },
         },

@@ -1,41 +1,80 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* Estilos para la barra lateral */
+#sidebar {
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 200px;
+  background-color: #f8f9fa;
+  padding-top: 20px;
+  overflow-y: auto;
+  border-right: 1px solid #ddd;
+  color: #000; /* Color negro para las letras */
 }
 
-body,
-html {
-    height: 100%;
-    font-family: Arial, sans-serif;
+#sidebar h4 {
+  color: #000; /* Color negro para el título */
 }
 
-/* public/style.css */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
+#sidebar .nav-link {
+  color: #000; /* Color negro para los enlaces */
 }
 
-h1 {
-    text-align: center;
-    color: #333;
+#sidebar .nav-link:hover {
+  color: #2c6b2f; /* Color verde oscuro al pasar el mouse */
 }
 
-canvas {
-    display: block;
-    margin: 0 auto;
-    max-width: 1000px;
+/* Estilos para la barra superior */
+#navbar {
+  position: fixed;
+  top: 0;
+  left: 200px; /* Espacio para la barra lateral */
+  width: calc(100% - 200px);
+  height: 110px;
+  z-index: 1000;
+  background-color: #dc3545; /* Color rojo para la barra superior */
 }
 
-/* Definir el tamaño del canvas en CSS */
-#myChart {
-    width: 100%; /* Ajusta el ancho del canvas al 100% del contenedor */
-    height: 400px; /* Establece la altura del canvas */
+#navbar .navbar-brand {
+  color: #fff; /* Color blanco para el texto de la barra superior */
 }
 
-canvas {
-    width: 100% !important;
-    height: 400px !important; /* Adjust the height as needed */
+#navbar .navbar-brand:hover {
+  color: #f8f9fa; /* Color blanco para el texto al pasar el mouse */
+}
+
+/* Estilos para el contenedor principal */
+#main-content {
+  margin-left: 200px; /* Espacio para la barra lateral */
+  margin-top: 110px; /* Altura de la barra superior */
+  background-color: #000; /* Fondo negro para el área de los dashboards */
+  color: #fff; /* Color blanco para el texto en el área de los dashboards */
+  padding: 20px;
+}
+
+/* Ajuste en los filtros */
+.filters-container {
+  margin-top: 70px; /* Espacio debajo de la barra superior */
+}
+
+/* Estilos para la tabla */
+table {
+  color: #fff;
+}
+
+th, td {
+  text-align: center;
+  padding: 10px;
+}
+
+th {
+  background-color: #343a40;
+}
+
+tr:nth-child(even) {
+  background-color: #495057;
+}
+
+tr:nth-child(odd) {
+  background-color: #343a40;
 }

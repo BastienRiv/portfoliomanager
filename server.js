@@ -27,13 +27,22 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api/performance', performanceRouter);
+//app.use('/api/performance', performanceRouter);
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
+app.get('/finance', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
+// Edición de Oscar
+// Router para dash
+// Usar el router en la aplicación
+app.use('/finance', performanceRouter);
+
+
+
+//app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 app.get('/portfolio', (req, res) => {
     res.sendFile(path.join(__filename, '../public/portfolio.html'));
@@ -87,66 +96,33 @@ app.get('/api/stockprice', (req, res) => {
         });
 });
 
-app.get('/api/dashboard', async (req, res) => {
-    try {
-        const { city, state } = req.query;
-        let query = `
-      SELECT emp.emp_id, job.job_desc
-      FROM pubs.employee AS emp
-      JOIN pubs.jobs AS job ON emp.job_id = job.job_id
-    `;
-
-        const params = [];
-        if (city && state) {
-            query += `WHERE emp.city = ? AND emp.state = ?`;
-            params.push(city, state);
-        }
-
-        const results = await executeQuery(query, params, res);
-
-        const jobCounts = {};
-        results.forEach((employee) => {
-            const jobDesc = employee.job_desc;
-            jobCounts[jobDesc] = (jobCounts[jobDesc] || 0) + 1;
-        });
-
-        res.json({ jobCounts });
-    } catch (error) {
-        res.status(500).json({ error: 'Database query error' });
-    }
-});
 
 app.get('/api/profit', (req, res) => {
     const query = `
-                WITH bu AS (
-                SELECT id_company, SUM(tot_investment) AS tot_investment
-                FROM portfolio.buy
-                GROUP BY id_company
-            ),
-            sel AS (
-                SELECT id_company, SUM(tot_sold) AS tot_sold
-                FROM portfolio.sell
-                GROUP BY id_company
-            ),
-            principal AS (
-            SELECT
-                COALESCE(bu.id_company, sel.id_company) AS id_company,
-                COALESCE(bu.tot_investment, 0) AS tot_investment,
-                COALESCE(sel.tot_sold, 0) AS tot_sold
-            FROM
-                bu
-            LEFT JOIN
-                sel ON bu.id_company = sel.id_company
-            UNION ALL
-            SELECT
-                COALESCE(bu.id_company, sel.id_company) AS id_company,
-                COALESCE(bu.tot_investment, 0) AS tot_investment,
-                COALESCE(sel.tot_sold, 0) AS tot_sold
-            FROM
-                sel
-            LEFT JOIN
-                bu ON sel.id_company = bu.id_company)
-            Select id_company, (tot_investment - tot_sold) as PL FROM principal   
+                  WITH cte AS (
+    SELECT id_company, MAX(cost) AS max_cost 
+    FROM portfolio.buy 
+    GROUP BY id_company
+  ), 
+  cte2 AS (
+    SELECT id_company, tot_sold, stocks_sold 
+    FROM sell
+  ), 
+  cte3 AS (
+    SELECT 
+      cte.id_company,
+      cte.max_cost * cte2.stocks_sold AS tot_cost,
+      cte2.tot_sold 
+    FROM cte 
+    JOIN cte2 ON cte.id_company = cte2.id_company
+  ) 
+  SELECT 
+    cte3.id_company, 
+    cte3.tot_sold, 
+    cte3.tot_cost, 
+    ((cte3.tot_sold - cte3.tot_cost) / cte3.tot_sold) * 100 AS pl 
+  FROM cte3 
+  WHERE cte3.id_company = ?   
   `;
 
     executeQuery(query, [], res)
@@ -197,3 +173,4 @@ const port = 4001;
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });
+

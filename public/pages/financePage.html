@@ -1,0 +1,39 @@
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="#">Finance Page</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul id="companies-list" class="navbar-nav ms-auto">
+          {{companies}}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-8">
+        <h2 class="mb-4">Stock Chart</h2>
+        <canvas id="lineChart"></canvas>
+      </div>
+      <div class="col-md-4">
+        <h2 class="mb-4">Profit/Loss</h2>
+        <div class="d-flex justify-content-center">
+          <canvas id="profitLossChart" width="300" height="300"></canvas>
+        </div>
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 id="company-id" class="card-title">Company ID: {{id_company}}</h5>
+            <p id="latest-adjusted-close" class="card-text">Latest Adjusted Close: {{latestAdjClose}}</p>
+            <a href="#" class="btn btn-primary">View More</a>
+            <a href="#" class="btn btn-secondary">Download Data</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
