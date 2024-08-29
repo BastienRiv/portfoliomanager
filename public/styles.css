@@ -4,38 +4,98 @@
     box-sizing: border-box;
 }
 
-body,
-html {
+html,
+body {
     height: 100%;
-    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-/* public/style.css */
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-h1 {
-    text-align: center;
+.top-bar {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar .username {
+    margin-right: 10px;
+}
+
+.top-bar .user-picture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+}
+
+.header .navbar-brand {
+    color: #333;
+    font-weight: bold;
+}
+
+.header .nav-link {
     color: #333;
 }
 
-canvas {
-    display: block;
-    margin: 0 auto;
-    max-width: 1000px;
+.welcome-section {
+    background-image: url(https://wallpapers.com/images/hd/visual-painting-of-investment-1eprffu1fvb8wm2k.jpg);
+    background-size: cover;
+    background-position: center;
+    flex-grow: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    padding: 100px 0;
+    position: relative;
 }
 
-/* Definir el tamaño del canvas en CSS */
-#myChart {
-    width: 100%; /* Ajusta el ancho del canvas al 100% del contenedor */
-    height: 400px; /* Establece la altura del canvas */
+.welcome-section .user-info {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
 }
 
-canvas {
-    width: 100% !important;
-    height: 400px !important; /* Adjust the height as needed */
+.welcome-section .user-info .username {
+    margin-right: 10px;
+}
+
+.welcome-section .user-info .user-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.welcome-section .btn-primary {
+    background-color: #ee3524;
+    border-color: #ee3524;
+}
+
+.features-section {
+    padding: 60px 0;
+    flex-grow: 1;
+}
+
+footer {
+    padding: 20px 0;
+    margin-top: auto;
 }
