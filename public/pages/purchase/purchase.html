@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trade Dashboard</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/pages/purchase/purchase.css" />
+</head>
+<body>
+    <div id="purchase-page">
+        <div class="left-column">
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="tab1">Buy</button>
+                    <button class="tab-button" data-tab="tab2">Sell</button>
+                </div>
+                <div class="tab-content active" id="tab1">
+                    <!-- Buy form -->
+                    <form action="/api/purchase" method="post" id="purchase-form">
+                        <select name="companies" id="company-select-purchase" hidden> 
+                            <!-- Options will be populated dynamically -->
+                        </select>
+
+                        <!-- Purchase Form -->
+                        <label for="company-name-purchase">Company:</label>
+                        <input type="text" id="company-name-purchase" name="company-name-purchase" readonly>
+
+                        <label for="bdate">Select a date</label>
+                        <input type="date" id="bdate" name="bdate" required />
+
+                        <label for="stocks-bought">Enter the number of stocks bought</label>
+                        <input type="number" id="stocks-bought" name="stocks_bought" min="1" max="9999" required />
+
+                        <label for="cost">Cost per stock </label>
+                        <input type="number" id="cost" name="cost" min="0.01" step="0.001" required readonly />
+
+                        <input type="submit" value="Ok" />
+                    </form>
+
+                    <!-- Buy table -->
+                    <table id="buy-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Date</th>
+                                <th>Stocks Traded</th>
+                                <th>Cost per Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rows will be added dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-content" id="tab2">
+                    <form action="/api/sale" method="post" id="sale-form">
+                         <select name="companies" id="company-select-sale" hidden>
+                            <!-- Options will be populated dynamically -->
+                        </select>
+
+                        <!-- Sale Form -->
+                        <label for="company-name-sale">Company:</label>
+                        <input type="text" id="company-name-sale" name="company-name-sale" readonly>
+
+                        <label for="sdate">Select a date</label>
+                        <input type="date" id="sdate" name="sdate" required />
+
+                        <label for="stocks_sold">Enter the number of stocks sold</label>
+                        <input type="number" id="stocks_sold" name="stocks_sold" min="1" max="9999" required />
+
+                        <label for="adj_cost">Cost per stock</label>
+                        <input type="number" id="adj_cost" name="adj_cost" min="0.01" step="0.001" required readonly />
+
+                        <input type="submit" value="Ok" />
+                    </form>
+
+                    <!-- Sell table -->
+                    <table id="sell-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Date</th>
+                                <th>Stocks Traded</th>
+                                <th>Cost per Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rows will be added dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="right-column">
+            <ul id="companies-list">
+                <!-- Company list will be populated dynamically -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="./pages/purchase/purchase.js"></script>
+</body>
+</html>
