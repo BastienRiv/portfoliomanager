@@ -1,14 +1,21 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .user-info {
@@ -46,13 +53,13 @@ body {
 }
 
 .welcome-section .btn-primary {
-  background-color: #EE3524;
-  border-color: #EE3524;
+    background-color: #ee3524;
+    border-color: #ee3524;
 }
 
 .features-section {
-  padding: 60px 0;
-  flex-grow: 1;
+    padding: 60px 0;
+    flex-grow: 1;
 }
 
 footer {
