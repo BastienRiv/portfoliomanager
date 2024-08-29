@@ -18,71 +18,38 @@ body {
     min-height: 100vh;
 }
 
-.top-bar {
-    background-color: #000;
-    color: #fff;
-    padding: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.top-bar .username {
-    margin-right: 10px;
+.user-info .username {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
-.top-bar .user-picture {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-}
-
-.header {
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 15px 0;
-}
-
-.header .navbar-brand {
-    color: #333;
-    font-weight: bold;
-}
-
-.header .nav-link {
-    color: #333;
+.user-info .user-picture {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
 }
 
 .welcome-section {
-    background-image: url(https://wallpapers.com/images/hd/visual-painting-of-investment-1eprffu1fvb8wm2k.jpg);
-    background-size: cover;
-    background-position: center;
-    flex-grow: 4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    text-align: center;
-    padding: 100px 0;
-    position: relative;
-}
-
-.welcome-section .user-info {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    display: flex;
-    align-items: center;
-}
-
-.welcome-section .user-info .username {
-    margin-right: 10px;
-}
-
-.welcome-section .user-info .user-picture {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+  background-image: url(https://wallpapers.com/images/hd/visual-painting-of-investment-1eprffu1fvb8wm2k.jpg);
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(0, 0, 0, 1); /* Darker background */
+  flex-grow: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  padding: 100px 0;
 }
 
 .welcome-section .btn-primary {
@@ -96,6 +63,6 @@ body {
 }
 
 footer {
-    padding: 20px 0;
-    margin-top: auto;
+  padding: 20px 0;
+  margin-top: auto;
 }
