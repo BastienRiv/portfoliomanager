@@ -33,6 +33,8 @@ app.get('/finance', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'finance.html'));
 });
 
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
