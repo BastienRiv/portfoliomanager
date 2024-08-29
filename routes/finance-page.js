@@ -108,12 +108,8 @@ JOIN Cte2 ON Cte.id_company = Cte2.id_company;
         labels: lineChartLabels,
         data: lineChartData
       },
-      circleChart: {
-        profitLossPercentage
-      },
-      predictionChart: {
-        plPercentage
-      },
+      profitLossPercentage,
+      plPercentage,
       tableData
     });
   }

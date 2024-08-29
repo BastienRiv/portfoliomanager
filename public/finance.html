@@ -124,12 +124,7 @@
   <div id="sidebar">
     <div class="container">
       <h4>COMPANIES</h4>
-      <ul class="nav flex-column">
-        ${companies.map(company => `
-        <li class="nav-item">
-          <a class="nav-link" href="/finance?id_company=${company.id_company}">${company.id_company}</a>
-        </li>
-        `).join('')}
+      <ul class="nav flex-column" id="companies">
       </ul>
     </div>
   </div>
@@ -212,9 +207,21 @@
       fetch("/api/finance?id_company=NFLX").then(
         response => response.json()
       ).then(data => {
-        const { lineChartData, lineChartLabels, profitLossPercentage, plPercentage } = data;
+        const { companies, lineChartData, lineChartLabels, profitLossPercentage, plPercentage } = data;
+        setupCharts(companies, lineChartData, lineChartLabels, profitLossPercentage, plPercentage);
       });
-      new Chart(lineCtx, {
+
+      function setupCharts(companies, lineChartData, lineChartLabels, profitLossPercentage, plPercentage) {
+
+        document.getElementById('companies').innerHTML =companies.map(
+          company => `
+        <li class="nav-item">
+          <a class="nav-link" href="/finance?id_company=${company}">${company}</a>
+        </li>
+        `).join('')
+        
+
+        new Chart(lineCtx, {
         type: 'line',
         data: {
           labels: JSON.stringify(lineChartLabels),
@@ -284,7 +291,7 @@
           plugins: {
             title: {
               display: true,
-              text: '${profitLossPercentage.toFixed(2)}%'
+              text: profitLossPercentage.toFixed(2)
             }
           }
         }
@@ -313,11 +320,13 @@
           plugins: {
             title: {
               display: true,
-              text: '${plPercentage.toFixed(2)}%'
+              text: plPercentage.toFixed(2)
             }
           }
         }
       });
+      }
+     
     </script>
 </body>
 
