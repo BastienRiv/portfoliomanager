@@ -57,7 +57,7 @@ financePageRouter.get('/', async (req, res) => {
   FROM cte3 
   WHERE cte3.id_company = ?
 `;
-    const [circleChartResults] = await executeQuery(query, [id_company]);
+    const circleChartResults = await executeQuery(query, [id_company]);
     const profitLossPercentage = circleChartResults[0]?.pl || 0;
 
     console.log("circleChartResults", circleChartResults);
