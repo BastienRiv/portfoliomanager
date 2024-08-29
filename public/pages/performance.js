@@ -1,5 +1,3 @@
-console.log('Running performance page script...');
-
 let performancePageData = {};
 let lineChart = null;
 let profitLossChart = null;
