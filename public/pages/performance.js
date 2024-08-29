@@ -24,7 +24,7 @@ function setupNavbar(data) {
 }
 
 function updateChart() {
-    const { id_company, lineChartLabels, lineChartData, profitLoss } = performancePageData;
+    const { id_company, lineChartLabels, lineChartData, profitLoss, tableData } = performancePageData;
 
     document.getElementById('company-id').innerHTML = `Company ID: ${id_company}`;
     document.getElementById('latest-adjusted-close').innerHTML = `Latest Adjusted Close: ${lineChartData[lineChartData.length - 1]}`;
@@ -88,12 +88,25 @@ function updateChart() {
             },
         },
     });
+
+    // Create Table
+
+    const tableElement = `
+        <tr>
+            <td>${tableData.id_company}</td>
+            <td>${parseFloat(tableData.adj_cost).toFixed(2)}</td>
+            <td>${parseFloat(tableData.Stock).toFixed(2)}</td>
+            <td>${parseFloat(tableData.money_stock).toFixed(2)}</td>
+        </tr>
+        `;
+    document.getElementById('table-body-tbody').innerHTML = tableElement;
 }
 
 async function loadData(id_company = 'AMZN') {
     return fetch(`http://localhost:4001/api/performance?id_company=${id_company}`)
         .then((response) => response.json())
         .then((data) => {
+            console.log({ data });
             performancePageData = data;
             performancePageData.id_company = id_company; // Ensure the company ID is set
             setupNavbar(data);

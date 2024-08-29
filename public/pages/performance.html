@@ -21,6 +21,7 @@
                 </div>
             </div>
 
+            <!-- Main container -->
             <div class="container my-5">
                 <div class="filters-container">
                     <div class="row mb-4">
@@ -32,16 +33,20 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-8">
-                        <h2 class="mb-4">Stock Chart</h2>
-                        <canvas id="lineChart"></canvas>
-                    </div>
-                    <div class="col-md-4">
+                <div class="row" id="container-charts">
+                    <div class="col-md-4" id="chart-profit-loss">
                         <h2 class="mb-4">Profit/Loss</h2>
                         <div class="d-flex justify-content-center">
                             <canvas id="profitLossChart" width="200" height="200"></canvas>
                         </div>
+                    </div>
+                    <!-- <div class="col-md-4" id="chart-profit-loss">
+                        <h2 class="mb-4">Prediction</h2>
+                        <div class="d-flex justify-content-center">
+                            <canvas id="profitLossChart" width="200" height="200"></canvas>
+                        </div>
+                    </div> -->
+                    <div class="col-md-4" id="chart-prediction">
                         <div class="card mt-4">
                             <div class="card-body">
                                 <h5 class="card-title" id="company-id">Company ID: ${id_company}</h5>
@@ -49,6 +54,34 @@
                                 <a href="#" class="btn btn-primary">View More</a>
                                 <a href="#" class="btn btn-secondary">Download Data</a>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="container-fluid my-5">
+                        <div class="col-md-12" id="table-stocks">
+                            <h2 class="mb-4">Stocks Table</h2>
+                            <div class="table-responsive">
+                                <table class="table table-dark table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Company</th>
+                                            <th>Adj Cost</th>
+                                            <th>Stock</th>
+                                            <th>Money Stock</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-body-tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8" id="chart-stock">
+                            <h2 class="mb-4">Stock Chart</h2>
+                            <canvas id="lineChart"></canvas>
                         </div>
                     </div>
                 </div>

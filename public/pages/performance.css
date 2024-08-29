@@ -1,5 +1,6 @@
 #performance-page-content {
     display: flex;
+    padding-right: 1rem;
 }
 
 #sidebar {
@@ -7,7 +8,7 @@
     /* position: fixed; */
     left: 0;
     top: 500;
-    width: 200px;
+    width: 20rem;
     background-color: white;
     padding-top: 20px;
     overflow-y: auto;
@@ -40,7 +41,25 @@
     color: rgb(207, 207, 207);
 }
 
-#main-content {
+#container-charts {
+    display: flex;
+    justify-content: center;
+}
+
+#chart-profit-loss {
+    width: 15rem;
+}
+
+#chart-prediction {
+    width: 20rem;
+}
+
+#table-stocks {
+    width: 50rem;
+}
+
+#chart-stock {
+    width: 100%;
 }
 
 .filters-container {
@@ -50,4 +69,24 @@
         color: black;
         border: 1px solid black;
     }
+}
+
+/* A ver */
+
+table {
+    width: 100%;
+}
+
+th {
+    width: 4rem;
+}
+
+.table th,
+.table td {
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+    width: 20%; /* Adjust percentage as needed */
 }
