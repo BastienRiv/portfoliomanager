@@ -229,7 +229,7 @@ app.get("/api/transactions/:type/:id_company", (req, res) => {
     });
   }
 
-  const query = `SELECT * FROM ${type} WHERE id_company = ?`;
+  const query = `SELECT * FROM ${type} WHERE id_company = ? and id=1`;
   executeQuery(query, [idCompany], res)
     .then((results) => {
       res.status(200).json(results);
@@ -243,7 +243,7 @@ app.get("/api/transactions/:type/:id_company", (req, res) => {
 app.get("/api/transaction/:type", (req, res) => {
   const type = req.params.type; // type = 'sell' || 'buy'
 
-  const query = `SELECT * FROM ${type}`;
+  const query = `SELECT * FROM ${type} where id=1`;
   executeQuery(query, [], res)
     .then((results) => {
       res.status(200).json(results);
