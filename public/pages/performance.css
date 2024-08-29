@@ -42,3 +42,12 @@
 
 #main-content {
 }
+
+.filters-container {
+    color: black;
+
+    a {
+        color: black;
+        border: 1px solid black;
+    }
+}
