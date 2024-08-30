@@ -4,9 +4,8 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-
 import { executeQuery } from "./database-setup.js";
-import performanceRouter from "./routes/performance.js";
+import performanceRouter from "./routes/performance.route.js";
 import { financePageRouter } from "./routes/finance-page.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -52,10 +51,6 @@ app.get("/portfolio", (req, res) => {
 
 app.get("/purchase", (req, res) => {
   res.sendFile(path.join(__filename, "../public/pages/purchase/purchase.html"));
-});
-
-app.get("/sale", (req, res) => {
-  res.sendFile(path.join(__filename, "../public/sale.html"));
 });
 
 app.get("/api", (req, res) => {
