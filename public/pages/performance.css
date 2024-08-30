@@ -1,92 +1,92 @@
 #performance-page-content {
-    display: flex;
-    padding-right: 1rem;
+  display: flex;
+  padding-right: 1rem;
 }
 
 #sidebar {
-    height: 100vh;
-    /* position: fixed; */
-    left: 0;
-    top: 500;
-    width: 20rem;
-    background-color: white;
-    padding-top: 20px;
-    overflow-y: auto;
-    border-right: 1px solid white;
-    color: black;
+  height: 100vh;
+  /* position: fixed; */
+  left: 0;
+  top: 500;
+  width: 20rem;
+  background-color: white;
+  padding-top: 20px;
+  overflow-y: auto;
+  border-right: 1px solid white;
+  color: black;
 }
 
 #sidebar h4 {
-    color: black;
+  color: black;
 }
 
 #sidebar .nav-link {
-    color: green;
+  color: green;
 }
 
 #navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background-color: red;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: red;
 }
 
 #navbar .navbar-brand {
-    color: white;
+  color: white;
 }
 
 #navbar .navbar-brand:hover {
-    color: rgb(207, 207, 207);
+  color: rgb(207, 207, 207);
 }
 
 #container-charts {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 #chart-profit-loss {
-    width: 15rem;
+  width: 15rem;
 }
 
 #chart-prediction {
-    width: 20rem;
+  width: 20rem;
 }
 
 #table-stocks {
-    width: 50rem;
+  width: 50rem;
 }
 
 #chart-stock {
-    width: 100%;
+  width: 100%;
 }
 
 .filters-container {
-    color: black;
+  color: black;
 
-    a {
-        color: black;
-        border: 1px solid black;
-    }
+  a {
+    color: black;
+    border: 1px solid black;
+  }
 }
 
 /* A ver */
 
 table {
-    width: 100%;
+  width: 100%;
 }
 
 th {
-    width: 4rem;
+  width: 4rem;
 }
 
 .table th,
 .table td {
-    white-space: nowrap; /* Prevents text from wrapping */
+  white-space: nowrap; /* Prevents text from wrapping */
 }
 
 .table th:nth-child(1),
 .table td:nth-child(1) {
-    width: 20%; /* Adjust percentage as needed */
+  width: 20%; /* Adjust percentage as needed */
 }

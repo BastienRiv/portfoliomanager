@@ -1,0 +1,123 @@
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f7f6;
+  margin: 0;
+  padding: 10px; /* Padding around the body */
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  box-sizing: border-box; /* Include padding and border in width/height calculations */
+  font-size: 0.9rem; /* Slightly smaller base font size */
+}
+
+h1 {
+  font-size: 1.8rem; /* Reduced font size */
+  margin-bottom: 10px; /* Reduced margin */
+  color: #333;
+  text-align: center; /* Ensure centering for alignment */
+}
+
+h2 {
+  max-width: fit-content;
+  margin: 0 auto 10px; /* Further reduced bottom margin */
+  font-size: 1.4rem; /* Smaller font size */
+  color: #333;
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the table-container within the body */
+  gap: 15px; /* Space between elements */
+  width: 100%;
+  max-width: 1000px; /* Reduced maximum width */
+}
+
+.table-single {
+  width: 100%;
+  overflow-x: auto; /* Allow horizontal scrolling */
+  max-height: 350px; /* Reduced height to fit content */
+}
+
+.table-single table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  table-layout: fixed; /* Fixed layout */
+  overflow: auto; /* Enable scrolling */
+}
+
+.table-single table thead {
+  background-color: #ee3524;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1; /* Ensure it stays above the table body */
+}
+
+.table-group {
+  display: flex;
+  gap: 15px; /* Space between table columns */
+  width: 100%;
+}
+
+.table-column {
+  flex: 1;
+  min-width: 0; /* Prevent the table column from growing too wide */
+  overflow: auto; /* Enable scrolling */
+  max-height: 350px; /* Adjust height */
+}
+
+.table-column table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  table-layout: fixed; /* Fixed layout */
+}
+
+table th,
+table td {
+  padding: 8px; /* Padding inside cells */
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  overflow: hidden; /* Hide overflowed text */
+  text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+  font-size: 0.9rem; /* Smaller font size for table content */
+}
+
+table thead {
+  background-color: #ee3524;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1; /* Ensure it stays above the table body */
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.button-container {
+  display: flex;
+  gap: 8px; /* Space between buttons */
+  margin-top: 10px; /* Reduced margin from tables */
+}
+
+a {
+  display: inline-block;
+  padding: 8px 12px; /* Reduced padding */
+  background-color: #9fa1a4;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px; /* Font size for buttons */
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+a:hover {
+  background-color: #45a049;
+}

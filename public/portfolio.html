@@ -1,35 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Porfolio</h1>
-    <table>
-        <tr>
-            <th>Company</th>
-            <th>Number Owned</th>
-            <th>Total Value</th>
-        </tr>
-        <tr>
-            <td>APPLE</td>
-            <td>1</td>
-            <td>$300</td>
-        </tr>   
-        <tr>
-            <td>AMZN</td>
-            <td>2</td>
-            <td>$500</td>
-        </tr>  
-        <tr>
-            <td>GOOG</td>
-            <td>5</td>
-            <td>$1000</td>
-        </tr>  
-    </table>
-    <a href="/purchase">Add stocks to portfolio</a>
-    <a href="/sell">Remove stocks from portfolio</a>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="portfolio.css" />
+  </head>
+  <body>
+    <h1>Portfolio</h1>
+    <div class="table-container">
+      <div class="table-single">
+        <h2>Investment Tracking</h2>
+        <table id="investment-table">
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Quantity</th>
+              <th>Total Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Rows will be added dynamically -->
+          </tbody>
+        </table>
+      </div>
+      <div class="table-group">
+        <div class="table-column">
+          <h2>Purchase Tracking</h2>
+          <table id="buy-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Stocks Traded</th>
+                <th>Cost per Stock</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Rows will be dynamically added here -->
+            </tbody>
+          </table>
+        </div>
+        <div class="table-column">
+          <h2>Sales Tracking</h2>
+          <table id="sell-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Stocks Traded</th>
+                <th>Cost per Stock</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Rows will be dynamically added here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="button-container">
+      <a href="/purchase#tab1">Add stocks to portfolio</a>
+      <a href="/purchase#tab2">Remove stocks from portfolio</a>
+    </div>
+    <script src="portfolio.js"></script>
+  </body>
 </html>
