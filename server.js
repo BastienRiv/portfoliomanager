@@ -80,7 +80,8 @@ app.get("/api/companies", (req, res) => {
 });
 
 app.get("/api/currentStocks", (req, res) => {
-  const query = `WITH StocksBought AS (
+  const query = `
+                WITH StocksBought AS (
                 SELECT
                     id_company,
                     SUM(stocks_bought) AS total_bought,
@@ -109,16 +110,29 @@ app.get("/api/currentStocks", (req, res) => {
                     COALESCE(b.total_bought, 0) - COALESCE(s.total_sold, 0) AS current_stock
                 FROM StocksSold s
                 LEFT JOIN StocksBought b ON b.id_company = s.id_company
+            ),
+            LatestCost AS (
+                SELECT
+                    id_company,
+                    adj_close AS latest_cost
+                FROM stocks b1
+                WHERE sdate = (
+                    SELECT MAX(sdate)
+                    FROM stocks b2
+                    WHERE b1.id_company = b2.id_company
+                )
             )
             SELECT
                 c.id_company AS Company,
                 c.current_stock AS Quantity,
-                b.total_investment AS Total_Cost
+                COALESCE(b.total_investment, 0) AS Total_Cost,
+                COALESCE(c.current_stock, 0) * COALESCE(l.latest_cost, 0) AS Total_Value
             FROM StocksCurrent c
             LEFT JOIN StocksBought b ON c.id_company = b.id_company
+            LEFT JOIN LatestCost l ON c.id_company = l.id_company
             WHERE c.current_stock > 0
             ORDER BY c.id_company;
-            ;`;
+                `;
   executeQuery(query, [], res)
     .then((result) => {
       res.status(200).json(result);

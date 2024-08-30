@@ -66,6 +66,10 @@ async function loadInvestmentTable() {
       costCell.textContent = investment.Total_Cost.toFixed(3);
       row.appendChild(costCell);
 
+      const valueCell = document.createElement("td");
+      valueCell.textContent = investment.Total_Value.toFixed(3);
+      row.appendChild(valueCell);
+
       tableBody.appendChild(row);
     });
   } catch (error) {
