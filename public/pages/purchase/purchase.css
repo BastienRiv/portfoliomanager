@@ -10,6 +10,14 @@ body {
   height: 100vh;
 }
 
+#nav-bar-bs {
+  background-color: #343a40; /* Background color of the nav bar */
+  color: white; /* Text color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Same shadow as #purchase-page */
+  width: 100%; /* Full width within the container */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
 #purchase-page {
   display: flex;
   background-color: #fff;
@@ -18,11 +26,13 @@ body {
   overflow: hidden;
   max-width: 1200px;
   width: 100%;
+  margin: auto; /* Center the page and add space around it */
 }
 
 .left-column,
 .right-column {
   padding: 20px;
+  overflow-y: auto; /* Allow scrolling inside these columns if necessary */
 }
 
 .left-column {

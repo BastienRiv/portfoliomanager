@@ -78,7 +78,19 @@ function populateAllTables() {
   loadTable("buy"); // For Purchase Tracking
   loadTable("sell"); // For Sales Tracking
   loadInvestmentTable(); // For Investment Tracking
+  loadNavigatingBarSellBuy();
 }
 
 // Run the function when the page loads
 document.addEventListener("DOMContentLoaded", populateAllTables);
+
+function loadNavigatingBarSellBuy() {
+  fetch("/nav-bar.html")
+    .then((response) => response.text())
+    .then((data) => {
+      console.log(data);
+      // Inject the HTML into the DOM
+      document.getElementById("nav-bar-bs").innerHTML = data;
+    })
+    .catch((error) => console.error("Error loading the content:", error));
+}

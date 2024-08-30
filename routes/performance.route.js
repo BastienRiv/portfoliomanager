@@ -1,46 +1,57 @@
-import express from 'express';
-import { executeQuery } from '../database-setup.js';
+import express from "express";
+import { executeQuery } from "../database-setup.js";
 
 const performanceRouter = express.Router();
 
-performanceRouter.get('/', async (req, res) => {
-    try {
-        const { id_company } = req.query;
+performanceRouter.get("/", async (req, res) => {
+  try {
+    const { id_company } = req.query;
 
-        // Obtener la lista de empresas
-        const companies = await executeQuery('SELECT DISTINCT id_company FROM portfolio.stocks', [], res);
+    // Obtener la lista de empresas
+    const companies = await executeQuery(
+      "SELECT DISTINCT id_company FROM portfolio.stocks",
+      [],
+      res
+    );
 
-        // Obtener los datos para el gráfico de línea
-        let query = `SELECT sdate, adj_close FROM stocks WHERE id_company = ?`;
-        const lineChartResults = await executeQuery(query, [id_company], res);
-        const lineChartLabels = lineChartResults.map((row) => row.sdate);
-        const lineChartData = lineChartResults.map((row) => row.adj_close);
+    // Obtener los datos para el gráfico de línea
+    let query = `SELECT sdate, adj_close FROM stocks WHERE id_company = ?`;
+    const lineChartResults = await executeQuery(query, [id_company], res);
+    const lineChartLabels = lineChartResults.map((row) => row.sdate);
+    const lineChartData = lineChartResults.map((row) => row.adj_close);
 
-        // One chart
-        const circleChartResults = await executeQuery(queryForCircleCharts(), [id_company], res);
-        const profitLossPercentage = circleChartResults[0]?.pl || 0;
-        const profitLoss = circleChartResults[0].PL;
+    // One chart
+    const circleChartResults = await executeQuery(
+      queryForCircleCharts(),
+      [id_company],
+      res
+    );
+    const profitLossPercentage = circleChartResults[0]?.pl || 0;
+    const profitLoss = circleChartResults[0].PL;
 
-        // Second chart
-        const [predictionChartResults] = await executeQuery(queryForPredictionChart(), [id_company]);
-        const plPercentage = predictionChartResults[0]?.PL_p || 0;
+    // Second chart
+    const [predictionChartResults] = await executeQuery(
+      queryForPredictionChart(),
+      [id_company]
+    );
+    const plPercentage = predictionChartResults[0]?.PL_p || 0;
 
-        const [tableData] = await executeQuery(queryForStockTable());
+    const [tableData] = await executeQuery(queryForStockTable());
 
-        res.send({
-            id_company,
-            companies,
-            lineChartLabels,
-            lineChartData,
-            profitLossPercentage,
-            profitLoss,
-            plPercentage,
-            tableData,
-        });
-    } catch (error) {
-        console.error('Database query error:', error);
-        res.status(500).json({ error: 'Database query error' });
-    }
+    res.send({
+      id_company,
+      companies,
+      lineChartLabels,
+      lineChartData,
+      profitLossPercentage,
+      profitLoss,
+      plPercentage,
+      tableData,
+    });
+  } catch (error) {
+    console.error("Database query error:", error);
+    res.status(500).json({ error: "Database query error" });
+  }
 });
 
 // function queryForCircleCharts() {
@@ -73,7 +84,7 @@ performanceRouter.get('/', async (req, res) => {
 // }
 
 function queryForCircleCharts() {
-    return `WITH bu AS (
+  return `WITH bu AS (
     SELECT id_company, SUM(tot_investment) AS tot_investment
     FROM portfolio.buy
     GROUP BY id_company
@@ -104,11 +115,11 @@ function queryForCircleCharts() {
   )
   SELECT id_company, (tot_investment - tot_sold) as PL
   FROM principal
-  WHERE id_company = ?`;
+  WHERE id_company = ? `;
 }
 
 function queryForPredictionChart() {
-    return `
+  return `
     WITH cte AS (
     SELECT id_company, MAX(cost) AS max_cost
     FROM portfolio.buy
@@ -125,7 +136,7 @@ function queryForPredictionChart() {
 }
 
 function queryForStockTable() {
-    return `WITH Cte AS (
+  return `WITH Cte AS (
     SELECT id_company, SUM(stocks_bought) AS compra
     FROM portfolio.buy
     GROUP BY id_company

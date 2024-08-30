@@ -77,7 +77,7 @@ function updateChart() {
       datasets: [
         {
           data: [profitLoss, 0],
-          backgroundColor: ["#231F20", "#CCCCCC"],
+          backgroundColor: ["#9FA1A4", "#CCCCCC"],
           borderWidth: 0,
         },
       ],
