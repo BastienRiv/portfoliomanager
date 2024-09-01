@@ -28,9 +28,7 @@ function updateChart() {
     performancePageData;
 
   document.getElementById("company-id").innerHTML = `Company ID: ${id_company}`;
-  document.getElementById(
-    "latest-adjusted-close"
-  ).innerHTML = `Latest Adjusted Close: ${
+  document.getElementById("latest-adjusted-close").innerHTML = `Prediction: ${
     lineChartData[lineChartData.length - 1]
   }`;
 
@@ -77,7 +75,7 @@ function updateChart() {
       datasets: [
         {
           data: [profitLoss, 0],
-          backgroundColor: ["#231F20", "#CCCCCC"],
+          backgroundColor: ["#9FA1A4", "#CCCCCC"],
           borderWidth: 0,
         },
       ],

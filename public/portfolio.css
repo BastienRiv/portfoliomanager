@@ -2,27 +2,37 @@ body {
   font-family: "Arial", sans-serif;
   background-color: #f4f7f6;
   margin: 0;
-  padding: 10px; /* Padding around the body */
+  padding: 20px; /* Increased padding around the body */
   color: #333;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh; /* Ensures the body takes at least the full viewport height */
   box-sizing: border-box; /* Include padding and border in width/height calculations */
   font-size: 0.9rem; /* Slightly smaller base font size */
 }
 
+#nav-bar-bs {
+  width: 100%;
+  max-width: 1000px; /* Matches the table width */
+  margin-bottom: 20px; /* Space between the navbar and the rest of the content */
+  background-color: #343a40; /* Same background color as the table headers */
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px; /* Optional: gives the navbar rounded corners */
+}
+
 h1 {
   font-size: 1.8rem; /* Reduced font size */
-  margin-bottom: 10px; /* Reduced margin */
+  margin-bottom: 20px; /* Increased margin */
   color: #333;
   text-align: center; /* Ensure centering for alignment */
 }
 
 h2 {
   max-width: fit-content;
-  margin: 0 auto 10px; /* Further reduced bottom margin */
+  margin: 20px auto 10px; /* Increased top margin and adjusted bottom margin */
   font-size: 1.4rem; /* Smaller font size */
   color: #333;
 }
@@ -31,15 +41,17 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center; /* Center the table-container within the body */
-  gap: 15px; /* Space between elements */
+  gap: 25px; /* Increased space between elements */
   width: 100%;
   max-width: 1000px; /* Reduced maximum width */
+  padding: 20px; /* Added padding inside the table container */
 }
 
 .table-single {
   width: 100%;
   overflow-x: auto; /* Allow horizontal scrolling */
   max-height: 350px; /* Reduced height to fit content */
+  padding: 15px; /* Added padding around single table */
 }
 
 .table-single table {
@@ -50,17 +62,9 @@ h2 {
   overflow: auto; /* Enable scrolling */
 }
 
-.table-single table thead {
-  background-color: #ee3524;
-  color: white;
-  position: sticky;
-  top: 0;
-  z-index: 1; /* Ensure it stays above the table body */
-}
-
 .table-group {
   display: flex;
-  gap: 15px; /* Space between table columns */
+  gap: 25px; /* Increased space between table columns */
   width: 100%;
 }
 
@@ -69,6 +73,7 @@ h2 {
   min-width: 0; /* Prevent the table column from growing too wide */
   overflow: auto; /* Enable scrolling */
   max-height: 350px; /* Adjust height */
+  padding: 15px; /* Added padding around table columns */
 }
 
 .table-column table {
@@ -80,7 +85,7 @@ h2 {
 
 table th,
 table td {
-  padding: 8px; /* Padding inside cells */
+  padding: 10px; /* Increased padding inside cells */
   text-align: left;
   border-bottom: 1px solid #ddd;
   overflow: hidden; /* Hide overflowed text */
@@ -102,22 +107,23 @@ table tbody tr:nth-child(even) {
 
 .button-container {
   display: flex;
-  gap: 8px; /* Space between buttons */
-  margin-top: 10px; /* Reduced margin from tables */
+  gap: 15px; /* Increased space between buttons */
+  margin-top: 20px; /* Increased margin from tables */
+  padding: 15px; /* Added padding around the button container */
 }
 
-a {
+.button-container a {
   display: inline-block;
-  padding: 8px 12px; /* Reduced padding */
+  padding: 8px 12px;
   background-color: #9fa1a4;
   color: white;
   text-decoration: none;
   border-radius: 4px;
-  font-size: 14px; /* Font size for buttons */
+  font-size: 14px;
   transition: background-color 0.3s ease;
   text-align: center;
 }
 
-a:hover {
+.button-container a:hover {
   background-color: #45a049;
 }
